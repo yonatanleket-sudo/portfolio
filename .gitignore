@@ -1,0 +1,6 @@
+server.ps1
+serve.js
+.claude/
+screenshots/
+node_modules/
+*.log
