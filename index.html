@@ -575,6 +575,24 @@
             font-weight: 600;
         }
 
+        .timeline-items li.highlight-achievement {
+            background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+            border: 1.5px solid #bfdbfe;
+            border-left: 4px solid var(--primary);
+            border-radius: 10px;
+            padding: 0.85rem 1rem 0.85rem 1.25rem;
+            margin-top: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-items li.highlight-achievement::before {
+            display: none;
+        }
+
+        .timeline-items li.highlight-achievement strong {
+            color: var(--primary-dark);
+        }
+
         /* ===== PROJECTS ===== */
         .projects {
             background: var(--bg-white);
@@ -1062,7 +1080,6 @@
     <section class="hero" id="about">
         <div class="hero-inner">
             <div class="hero-content">
-                <div class="hero-badge">Open to Opportunities</div>
                 <h1>
                     Senior <span class="gradient-text">Product Manager</span> & AI Strategist
                 </h1>
@@ -1184,7 +1201,7 @@
                     <div class="timeline-header">
                         <div>
                             <div class="timeline-role">Product Manager</div>
-                            <div class="timeline-company">Hexagon Technologies (formerly ParagonEX)</div>
+                            <div class="timeline-company">Hexagon Technologies</div>
                         </div>
                         <div class="timeline-date">2019 &ndash; 2022</div>
                     </div>
@@ -1192,7 +1209,9 @@
                         <li><strong>B2B SaaS CRM & Portfolio Management:</strong> Led the full lifecycle of a multi-tenant CRM and Client Management platform serving global enterprise brokerages.</li>
                         <li><strong>Client Success & Implementation:</strong> Translated complex client requirements into scalable feature sets, working closely on system implementation.</li>
                         <li><strong>Intelligent Prioritization Engine:</strong> Developed event-driven logic and task-scoring algorithms for smarter lead management and proactive engagement.</li>
-                        <li><strong>Retention Strategy:</strong> Launched proactive CRM alerting based on real-time user behavior &mdash; increased retention by 15% and grew ARPU by 5%.</li>
+                        <li class="highlight-achievement">
+                            <strong>Smart Alert System:</strong> Designed and implemented a smart alert engine in the CRM that delivered real-time, critical actions and tailored insights for customer trading portfolios to brokers &mdash; driving a <strong>15% boost in customer retention</strong> and <strong>5% growth in ARPU</strong>.
+                        </li>
                     </ul>
                 </div>
 
