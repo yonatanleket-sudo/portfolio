@@ -1054,6 +1054,217 @@
             opacity: 1;
             transform: translateY(0);
         }
+
+        /* ===== STAGGER DELAYS ===== */
+        .metrics-grid .metric-card:nth-child(1) { transition-delay: 0s; }
+        .metrics-grid .metric-card:nth-child(2) { transition-delay: 0.1s; }
+        .metrics-grid .metric-card:nth-child(3) { transition-delay: 0.2s; }
+        .metrics-grid .metric-card:nth-child(4) { transition-delay: 0.3s; }
+        .projects-grid .project-card:nth-child(1) { transition-delay: 0s; }
+        .projects-grid .project-card:nth-child(2) { transition-delay: 0.12s; }
+        .projects-grid .project-card:nth-child(3) { transition-delay: 0.24s; }
+
+        /* ===== HERO ENHANCEMENTS ===== */
+        .hero {
+            background: linear-gradient(160deg, #ffffff 0%, #f0f7ff 55%, #e8f3ff 100%);
+        }
+
+        @keyframes float-orb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(24px, -18px) scale(1.06); }
+            66% { transform: translate(-12px, 12px) scale(0.97); }
+        }
+
+        .hero::before {
+            animation: float-orb 14s ease-in-out infinite;
+            width: 720px;
+            height: 720px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.09) 0%, transparent 70%);
+        }
+
+        .hero::after {
+            animation: float-orb 18s ease-in-out infinite reverse;
+            width: 520px;
+            height: 520px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+        }
+
+        /* Photo glow pulse */
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: var(--shadow-xl), 0 0 0 0 rgba(37, 99, 235, 0); }
+            50% { box-shadow: var(--shadow-xl), 0 0 40px 12px rgba(37, 99, 235, 0.09); }
+        }
+
+        .hero-photo img {
+            animation: glow-pulse 5s ease-in-out infinite;
+        }
+
+        /* Stronger gradient text */
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 40%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Hero stat separators */
+        .hero-stats {
+            border-top: 1px solid var(--border-light);
+            padding-top: 1.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .hero-stat {
+            position: relative;
+            padding-right: 2.5rem;
+        }
+
+        .hero-stat:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 30px;
+            width: 1px;
+            background: var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .hero-stat:not(:last-child)::after { display: none; }
+            .hero-stats { border-top: none; padding-top: 0; }
+        }
+
+        /* ===== METRIC CARD COLORED BACKGROUNDS ===== */
+        .metric-card.savings-card   { background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); }
+        .metric-card.activation-card { background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); }
+        .metric-card.retention-card { background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); }
+        .metric-card.accuracy-card  { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); }
+
+        /* ===== PROJECT CARD HOVER OVERLAY ===== */
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(29, 78, 216, 0.93) 0%, rgba(14, 165, 233, 0.89) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-overlay-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.625rem;
+            padding: 0.875rem 1.875rem;
+            background: white;
+            color: var(--primary);
+            border-radius: 100px;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            text-decoration: none;
+            transform: translateY(10px);
+            transition: transform 0.3s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        .project-card:hover .project-overlay-btn {
+            transform: translateY(0);
+        }
+
+        .project-overlay-btn:hover {
+            transform: translateY(-3px) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+        }
+
+        /* ===== TECH STACK BADGES ===== */
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.375rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-tech-badge {
+            font-size: 0.6875rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            background: var(--bg-subtle);
+            padding: 0.2rem 0.65rem;
+            border-radius: 100px;
+            border: 1px solid var(--border-light);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== SECTION LABEL PILL ===== */
+        .section-label {
+            background: var(--primary-bg);
+            padding: 0.3rem 0.875rem;
+            border-radius: 100px;
+            border: 1px solid rgba(37, 99, 235, 0.15);
+        }
+
+        /* ===== ACTIVE NAV LINK ===== */
+        .nav-links a.nav-active {
+            color: var(--primary);
+            background: var(--primary-bg);
+        }
+
+        /* ===== SCROLL-TO-TOP BUTTON ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 44px;
+            height: 44px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(16px);
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .scroll-top:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(37, 99, 235, 0.45);
+        }
+
+        /* ===== ENHANCED FOOTER ===== */
+        footer {
+            background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
+            padding: 2.5rem 2rem;
+        }
+
+        footer p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .scroll-top { bottom: 1.25rem; right: 1.25rem; }
+        }
     </style>
 </head>
 <body>
@@ -1137,32 +1348,32 @@
                 <p class="section-desc">Key outcomes from delivering AI-driven product solutions across enterprise platforms.</p>
             </div>
             <div class="metrics-grid">
-                <div class="metric-card fade-in">
+                <div class="metric-card savings-card fade-in">
                     <div class="metric-icon savings">
                         <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
                     </div>
-                    <div class="metric-value">$1.2M</div>
+                    <div class="metric-value" data-counter="$1.2M">$1.2M</div>
                     <div class="metric-label">Annualized OpEx Savings</div>
                 </div>
-                <div class="metric-card fade-in">
+                <div class="metric-card activation-card fade-in">
                     <div class="metric-icon activation">
                         <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
                     </div>
-                    <div class="metric-value">+10%</div>
+                    <div class="metric-value" data-counter="+10%">+10%</div>
                     <div class="metric-label">User Activation Increase</div>
                 </div>
-                <div class="metric-card fade-in">
+                <div class="metric-card retention-card fade-in">
                     <div class="metric-icon retention">
                         <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
                     </div>
-                    <div class="metric-value">+15%</div>
+                    <div class="metric-value" data-counter="+15%">+15%</div>
                     <div class="metric-label">B2B Client Retention</div>
                 </div>
-                <div class="metric-card fade-in">
+                <div class="metric-card accuracy-card fade-in">
                     <div class="metric-icon accuracy">
                         <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
                     </div>
-                    <div class="metric-value">95%</div>
+                    <div class="metric-value" data-counter="95%">95%</div>
                     <div class="metric-label">Classification Accuracy</div>
                 </div>
             </div>
@@ -1247,6 +1458,12 @@
                 <div class="project-card fade-in">
                     <div class="project-preview">
                         <img src="screenshots/forge-ai.jpg" alt="Forge AI Screenshot" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#eff6ff,#dbeafe);color:#2563eb;font-size:2.5rem;font-weight:800;font-family:DM Sans,sans-serif&quot;>Forge AI</div>'">
+                        <div class="project-overlay">
+                            <a href="https://forge-with-ai.lovable.app" target="_blank" class="project-overlay-btn">
+                                Open App
+                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
                     </div>
                     <div class="project-info">
                         <div class="project-tag">
@@ -1255,6 +1472,12 @@
                         </div>
                         <div class="project-name">Forge AI</div>
                         <p class="project-desc">AI-powered content repurposing platform. Paste long-form content, select your industry and tone, and generate compliant social media posts instantly.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-badge">React</span>
+                            <span class="project-tech-badge">OpenAI</span>
+                            <span class="project-tech-badge">Tailwind</span>
+                            <span class="project-tech-badge">TypeScript</span>
+                        </div>
                         <a href="https://forge-with-ai.lovable.app" target="_blank" class="project-link">
                             View Live App
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -1265,6 +1488,12 @@
                 <div class="project-card fade-in">
                     <div class="project-preview">
                         <img src="screenshots/meeting-ai.jpg" alt="MeetingAI Screenshot" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);color:#0284c7;font-size:2.5rem;font-weight:800;font-family:DM Sans,sans-serif&quot;>MeetingAI</div>'">
+                        <div class="project-overlay">
+                            <a href="https://kodo-10.lovable.app" target="_blank" class="project-overlay-btn">
+                                Open App
+                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
                     </div>
                     <div class="project-info">
                         <div class="project-tag">
@@ -1273,6 +1502,12 @@
                         </div>
                         <div class="project-name">MeetingAI</div>
                         <p class="project-desc">Upload meeting recordings and get AI-powered summaries, key decisions, and action items. Supports MP3, WAV, MP4, and WEBM formats.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-badge">React</span>
+                            <span class="project-tech-badge">Whisper AI</span>
+                            <span class="project-tech-badge">TypeScript</span>
+                            <span class="project-tech-badge">Supabase</span>
+                        </div>
                         <a href="https://kodo-10.lovable.app" target="_blank" class="project-link">
                             View Live App
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -1283,6 +1518,12 @@
                 <div class="project-card fade-in">
                     <div class="project-preview">
                         <img src="screenshots/tether-crm.jpg" alt="TetherCRM Screenshot" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fef3c7,#fde68a);color:#d97706;font-size:2.5rem;font-weight:800;font-family:DM Sans,sans-serif&quot;>TetherCRM</div>'">
+                        <div class="project-overlay">
+                            <a href="https://tether-express.lovable.app" target="_blank" class="project-overlay-btn">
+                                Open App
+                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                        </div>
                     </div>
                     <div class="project-info">
                         <div class="project-tag">
@@ -1291,6 +1532,12 @@
                         </div>
                         <div class="project-name">FreelanceCRM</div>
                         <p class="project-desc">Client and project management dashboard for freelancers. Track clients, projects, follow-ups, and activity with a clean, intuitive interface.</p>
+                        <div class="project-tech">
+                            <span class="project-tech-badge">React</span>
+                            <span class="project-tech-badge">Tailwind</span>
+                            <span class="project-tech-badge">Supabase</span>
+                            <span class="project-tech-badge">TypeScript</span>
+                        </div>
                         <a href="https://tether-express.lovable.app" target="_blank" class="project-link">
                             View Live App
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -1413,51 +1660,103 @@
         </div>
     </section>
 
+    <!-- Scroll to top -->
+    <button class="scroll-top" id="scrollTop" aria-label="Back to top">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+
     <!-- Footer -->
     <footer>
         <p>&copy; 2026 Yonatan Leket. Tel Aviv, Israel.</p>
     </footer>
 
     <script>
-        // Navbar scroll effect
+        // ── Navbar scroll effect ──────────────────────────────
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             navbar.classList.toggle('scrolled', window.scrollY > 20);
         });
 
-        // Mobile menu toggle
+        // ── Mobile menu toggle ────────────────────────────────
         const mobileToggle = document.getElementById('mobileToggle');
         const navLinks = document.getElementById('navLinks');
         mobileToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
         });
-
-        // Close mobile menu on link click
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => navLinks.classList.remove('active'));
         });
 
-        // Fade-in on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-
-        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-        // Smooth scroll for nav links
+        // ── Smooth scroll ─────────────────────────────────────
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
+
+        // ── Active nav on scroll ──────────────────────────────
+        const sections = document.querySelectorAll('section[id]');
+        const navAnchors = document.querySelectorAll('.nav-links a[href^="#"]');
+        function updateActiveNav() {
+            let current = '';
+            sections.forEach(section => {
+                if (window.scrollY >= section.offsetTop - 100) current = section.id;
+            });
+            navAnchors.forEach(a => {
+                a.classList.toggle('nav-active', a.getAttribute('href') === '#' + current);
+            });
+        }
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+
+        // ── Scroll-to-top button ──────────────────────────────
+        const scrollTopBtn = document.getElementById('scrollTop');
+        window.addEventListener('scroll', () => {
+            scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+        }, { passive: true });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // ── Count-up animation ────────────────────────────────
+        function animateCounter(el) {
+            const raw = el.dataset.counter;
+            const prefix  = raw.startsWith('$') ? '$' : raw.startsWith('+') ? '+' : '';
+            const suffix  = raw.endsWith('M') ? 'M' : raw.endsWith('%') ? '%' : raw.endsWith('+') ? '+' : '';
+            const numStr  = raw.replace(/[$+%M]/g, '');
+            const target  = parseFloat(numStr);
+            const isDecimal = numStr.includes('.');
+            const duration = 1600;
+            const startTime = performance.now();
+
+            function tick(now) {
+                const progress = Math.min((now - startTime) / duration, 1);
+                const eased = 1 - Math.pow(1 - progress, 3);
+                const val = eased * target;
+                el.textContent = prefix + (isDecimal ? val.toFixed(1) : Math.round(val)) + suffix;
+                if (progress < 1) requestAnimationFrame(tick);
+            }
+            el.textContent = prefix + (isDecimal ? '0.0' : '0') + suffix;
+            requestAnimationFrame(tick);
+        }
+
+        // ── Fade-in + trigger counters on visibility ──────────
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Trigger counters inside newly-visible cards
+                    entry.target.querySelectorAll('[data-counter]').forEach(animateCounter);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Also observe metric cards directly (they have data-counter children)
+        document.querySelectorAll('.metric-card').forEach(card => observer.observe(card));
     </script>
 </body>
 </html>
