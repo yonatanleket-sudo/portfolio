@@ -484,6 +484,13 @@
             font-weight: 500;
         }
 
+        .metric-context {
+            font-size: 0.75rem;
+            color: var(--text-tertiary);
+            margin-top: 0.5rem;
+            line-height: 1.4;
+        }
+
         /* ===== EXPERIENCE ===== */
         .experience {
             background: var(--bg-light);
@@ -532,6 +539,96 @@
             color: var(--primary);
             font-weight: 600;
             margin-top: 0.25rem;
+        }
+
+        .timeline-company-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            margin-top: 0.2rem;
+            font-style: italic;
+            line-height: 1.45;
+        }
+
+        /* ===== GROUPED COMPANY CARD (multi-role progression) ===== */
+        .timeline-item-grouped .timeline-header {
+            margin-bottom: 0;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .timeline-company-main {
+            font-size: 1.2rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            color: var(--primary);
+            letter-spacing: -0.01em;
+        }
+
+        .timeline-tenure {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            margin-top: 0.2rem;
+        }
+
+        .timeline-roles {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .timeline-role-block {
+            padding: 1.5rem 0;
+        }
+
+        .timeline-role-block:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-role-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .timeline-role-block .timeline-role {
+            font-size: 1.125rem;
+        }
+
+        /* Promotion divider */
+        .promotion-divider {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.25rem 0;
+        }
+
+        .promotion-divider::before,
+        .promotion-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .promotion-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #059669;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            white-space: nowrap;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
         }
 
         .timeline-date {
@@ -591,6 +688,149 @@
 
         .timeline-items li.highlight-achievement strong {
             color: var(--primary-dark);
+        }
+
+        /* ===== EXPANDABLE CASE STUDY ===== */
+
+        /* Card: full click area with hover lift */
+        .timeline-items li.highlight-achievement.expandable {
+            cursor: pointer;
+            position: relative;
+            transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+        }
+
+        .timeline-items li.highlight-achievement.expandable:hover {
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+            border-color: var(--primary-light);
+        }
+
+        /* CTA: "See how →" — left-aligned, separate line, quiet but clear */
+        .highlight-hint {
+            display: block;
+            margin-top: 0.625rem;
+        }
+
+        .highlight-hint .see-how {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #2B2B2B;
+            letter-spacing: 0.01em;
+            transition: color 0.2s ease, text-decoration 0.2s ease;
+            text-decoration: none;
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .highlight-hint .see-how:hover {
+            text-decoration: underline;
+            color: #1a1a1a;
+        }
+
+        /* Arrow styling */
+        .highlight-hint .see-how .arrow {
+            display: inline-block;
+            transition: transform 0.25s ease-in-out;
+        }
+
+        .expandable.expanded .highlight-hint .see-how .arrow {
+            transform: rotate(90deg);
+        }
+
+        /* Expanded state: swap CTA text */
+        .expandable .hint-expand { display: inline; }
+        .expandable .hint-collapse { display: none; }
+        .expandable.expanded .hint-expand { display: none; }
+        .expandable.expanded .hint-collapse { display: inline; }
+
+        /* ===== EXPANDED PANEL ===== */
+        .cs-expand {
+            display: none;
+            margin-top: 0;
+        }
+
+        .expandable.expanded .cs-expand {
+            display: block;
+            margin-top: 1rem;
+            animation: csReveal 0.2s ease-in-out;
+        }
+
+        @keyframes csReveal {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .cs-expand-inner {
+            border-top: 1px solid rgba(37, 99, 235, 0.12);
+            padding-top: 1rem;
+        }
+
+        /* Steps: Problem / Insight / Solution */
+        .cs-expand .cs-step {
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            border-left: 2.5px solid var(--border);
+            transition: border-color 0.2s ease;
+        }
+
+        .cs-expand .cs-step:hover {
+            border-left-color: var(--primary-light);
+        }
+
+        .cs-expand .cs-step:last-of-type { margin-bottom: 0; }
+
+        .cs-expand .cs-step h4 {
+            font-size: 0.8125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .cs-expand .cs-step p {
+            font-size: 0.8125rem;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        /* Impact metrics: prominent card */
+        .cs-expand .cs-results {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.25rem;
+            padding: 1rem 1.25rem;
+            background: linear-gradient(135deg, var(--primary-bg) 0%, #f0f9ff 100%);
+            border-radius: 10px;
+            border: 1px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .cs-expand .cs-results-label {
+            font-size: 0.625rem;
+            font-weight: 700;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+        }
+
+        .cs-expand .cs-result-value {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .cs-expand .cs-result-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-top: 0.2rem;
         }
 
         /* ===== PROJECTS ===== */
@@ -690,6 +930,194 @@
         .project-link svg {
             width: 16px;
             height: 16px;
+        }
+
+        /* ===== CASE STUDIES ===== */
+        .case-studies {
+            background: var(--bg-white);
+        }
+
+        .case-study-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .case-study-card {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .case-study-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .cs-header {
+            padding: 2rem 2rem 0;
+        }
+
+        .cs-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            margin-bottom: 1rem;
+        }
+
+        .cs-tag.fintech { background: #ecfdf5; color: #059669; }
+        .cs-tag.ai { background: #eff6ff; color: #2563eb; }
+
+        .cs-header h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .cs-header p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-body {
+            padding: 0 2rem 2rem;
+        }
+
+        .cs-step {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .cs-step:last-child { margin-bottom: 0; }
+
+        .cs-step-icon {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: var(--primary-bg);
+            color: var(--primary);
+            margin-top: 2px;
+        }
+
+        .cs-step h4 {
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .cs-step p {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .cs-results {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.25rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .cs-result {
+            text-align: center;
+            flex: 1;
+        }
+
+        .cs-result-value {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.375rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .cs-result-label {
+            font-size: 0.6875rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .case-study-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ===== PHILOSOPHY ===== */
+        .philosophy {
+            background: var(--bg-white);
+            border-top: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .philosophy-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .philosophy-card {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .philosophy-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .philosophy-card .phil-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .phil-icon.research { background: linear-gradient(135deg, #eff6ff, #dbeafe); color: #2563eb; }
+        .phil-icon.data { background: linear-gradient(135deg, #ecfdf5, #d1fae5); color: #059669; }
+        .phil-icon.ship { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #d97706; }
+
+        .philosophy-card h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.0625rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .philosophy-card p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .philosophy-grid { grid-template-columns: 1fr; }
         }
 
         /* ===== SKILLS ===== */
@@ -1350,6 +1778,7 @@
                     </div>
                     <div class="metric-value" data-counter="$1.2M">$1.2M</div>
                     <div class="metric-label">Annualized OpEx Savings</div>
+                    <div class="metric-context">Replaced manual document review with self-service automation at Payoneer</div>
                 </div>
                 <div class="metric-card activation-card fade-in">
                     <div class="metric-icon activation">
@@ -1357,6 +1786,7 @@
                     </div>
                     <div class="metric-value" data-counter="+10%">+10%</div>
                     <div class="metric-label">User Activation Increase</div>
+                    <div class="metric-context">KYC onboarding success rate after launching AI document validation checkpoint</div>
                 </div>
                 <div class="metric-card retention-card fade-in">
                     <div class="metric-icon retention">
@@ -1364,6 +1794,7 @@
                     </div>
                     <div class="metric-value" data-counter="+15%">+15%</div>
                     <div class="metric-label">B2B Client Retention</div>
+                    <div class="metric-context">Driven by smart alert engine delivering real-time portfolio insights to account and portfolio managers</div>
                 </div>
                 <div class="metric-card accuracy-card fade-in">
                     <div class="metric-icon accuracy">
@@ -1371,6 +1802,7 @@
                     </div>
                     <div class="metric-value" data-counter="95%">95%</div>
                     <div class="metric-label">Classification Accuracy</div>
+                    <div class="metric-context">OCR-based document type detection across global onboarding flows</div>
                 </div>
             </div>
         </div>
@@ -1397,43 +1829,143 @@
                         <div class="timeline-date">2022 &ndash; Present</div>
                     </div>
                     <ul class="timeline-items">
-                        <li class="highlight-achievement"><strong>AI Document Intelligence:</strong> Spearheaded real-time AI "Guardrail" for KYC onboarding &mdash; validates document quality and OCR-based classification before submission, driving a <strong>10% increase in successful user onboarding</strong>.</li>
-                        <li><strong>B2B Operational Excellence:</strong> Engineered a self-service resolution platform for document discrepancies, transforming manual processes into a product-led solution, saving $1.2M annually.</li>
-                        <li><strong>Strategic Stakeholder Management:</strong> Collaborate with GTM, Sales, and Data Science to align AI roadmaps with enterprise risk management and growth goals.</li>
-                        <li><strong>Executive Alignment:</strong> Present product performance metrics and strategic vision to executive leadership, ensuring ROI visibility.</li>
-                    </ul>
-                </div>
-
-                <div class="timeline-item fade-in">
-                    <div class="timeline-header">
-                        <div>
-                            <div class="timeline-role">Product Manager</div>
-                            <div class="timeline-company">Hexagon Technologies</div>
-                        </div>
-                        <div class="timeline-date">2019 &ndash; 2022</div>
-                    </div>
-                    <ul class="timeline-items">
-                        <li><strong>B2B SaaS CRM & Portfolio Management:</strong> Led the full lifecycle of a multi-tenant CRM and Client Management platform serving global enterprise brokerages.</li>
-                        <li><strong>Client Success & Implementation:</strong> Translated complex client requirements into scalable feature sets, working closely on system implementation.</li>
-                        <li><strong>Intelligent Prioritization Engine:</strong> Developed event-driven logic and task-scoring algorithms for smarter lead management and proactive engagement.</li>
-                        <li class="highlight-achievement">
-                            <strong>Smart Alert System:</strong> Designed and implemented a smart alert engine in the CRM that delivered real-time, critical actions and tailored insights for customer trading portfolios to brokers &mdash; driving a <strong>15% boost in customer retention</strong> and <strong>5% growth in ARPU</strong>.
+                        <li><strong>Scope:</strong> Led product planning and development of the Onboarding &amp; KYC product for global SMBs and enterprises, with a focus on managing risk, preventing fraud, reducing onboarding friction, and improving regulatory alignment.</li>
+                        <li class="highlight-achievement expandable" onclick="this.classList.toggle('expanded')" tabindex="0" role="button" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('expanded');this.setAttribute('aria-expanded',this.classList.contains('expanded'))}">
+                            <strong>AI Document Intelligence:</strong> Collaborated with the Data Science team to build and launch an internal GenAI document scanning model for KYC automation, driving a <strong>10% increase in successful user onboarding</strong> and meaningful gains in operational efficiency.
+                            <div class="highlight-hint">
+                                <span class="see-how"><span class="hint-expand">See details <span class="arrow">&rarr;</span></span><span class="hint-collapse">Hide details <span class="arrow">&uarr;</span></span></span>
+                            </div>
+                            <div class="cs-expand">
+                                <div class="cs-expand-inner">
+                                    <div class="cs-step">
+                                        <div>
+                                            <h4>Problem</h4>
+                                            <p>Users were dropping off during onboarding because documents kept getting rejected after submission. They waited days for manual review only to be told to re-upload.</p>
+                                        </div>
+                                    </div>
+                                    <div class="cs-step">
+                                        <div>
+                                            <h4>Key Insight</h4>
+                                            <p>Most rejections were detectable at upload time. If we validated documents before submission, we could cut the waiting loop and reduce support load at the same time.</p>
+                                        </div>
+                                    </div>
+                                    <div class="cs-step">
+                                        <div>
+                                            <h4>Solution</h4>
+                                            <p>Partnered with Data Science to build an internal GenAI scanning model that checks document quality and type in real time, before the user hits submit.</p>
+                                        </div>
+                                    </div>
+                                    <div class="cs-results">
+                                        <div>
+                                            <div class="cs-result-value">+10%</div>
+                                            <div class="cs-result-label">Onboarding Success Rate</div>
+                                        </div>
+                                        <div>
+                                            <div class="cs-result-value">$1.2M</div>
+                                            <div class="cs-result-label">Operational Savings</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </li>
+                        <li><strong>Cost Reduction:</strong> Designed and implemented an automated self-declaration workflow for document discrepancies, replacing a fully manual review process and saving <strong>$1.2M annually</strong> while improving customer trust in the verification flow.</li>
                     </ul>
                 </div>
 
-                <div class="timeline-item fade-in">
+                <div class="timeline-item timeline-item-grouped fade-in">
+                    <!-- Company header -->
                     <div class="timeline-header">
                         <div>
-                            <div class="timeline-role">Technical Support Engineer Team Leader</div>
-                            <div class="timeline-company">Hexagon Technologies</div>
+                            <div class="timeline-company-main">Hexagon Technologies</div>
+                            <div class="timeline-company-desc">B2B FinTech providing SaaS trading platforms, CRM and portfolio management solutions for global brokerage firms.</div>
+                            <div class="timeline-tenure">5 years &middot; 2017 &ndash; 2022</div>
                         </div>
-                        <div class="timeline-date">2017 &ndash; 2019</div>
                     </div>
-                    <ul class="timeline-items">
-                        <li>Led a team of 8 engineers, managing critical system escalations and defining KPIs for service excellence.</li>
-                        <li>Bridged support and R&D by identifying recurring vulnerabilities and turning them into product requirements &mdash; reducing urgent issues by 30%.</li>
-                    </ul>
+
+                    <div class="timeline-roles">
+                        <!-- Role 1: Product Manager (most recent first) -->
+                        <div class="timeline-role-block">
+                            <div class="timeline-role-header">
+                                <div class="timeline-role">Product Manager</div>
+                                <div class="timeline-date">2019 &ndash; 2022</div>
+                            </div>
+                            <ul class="timeline-items">
+                                <li><strong>Scope:</strong> Owned the full lifecycle of Payment and CRM products, using customer behavior data and market insights to set priorities and drive the roadmap, covering both new features and existing product improvements.</li>
+                                <li><strong>CRM Build and Launch:</strong> Oversaw the end-to-end build and launch of the company's CRM system, from initial concept through MVP. Managed design, production, testing, cost planning, and post-launch support.</li>
+                                <li class="highlight-achievement expandable" onclick="this.classList.toggle('expanded');this.setAttribute('aria-expanded',this.classList.contains('expanded'))" tabindex="0" role="button" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('expanded');this.setAttribute('aria-expanded',this.classList.contains('expanded'))}">
+                                    <strong>Smart Alert System:</strong> Designed and built a smart alert engine in the CRM that gave account and portfolio managers real-time, actionable insights on customer trading portfolios, boosting <strong>client retention by 15%</strong> and growing <strong>ARPU by 5%</strong>.
+                                    <div class="highlight-hint">
+                                        <span class="see-how"><span class="hint-expand">See details <span class="arrow">&rarr;</span></span><span class="hint-collapse">Hide details <span class="arrow">&uarr;</span></span></span>
+                                    </div>
+                                    <div class="cs-expand">
+                                        <div class="cs-expand-inner">
+                                            <div class="cs-step"><div><h4>Problem</h4><p>Account and portfolio managers were catching churn signals too late. By the time they noticed a client going quiet or withdrawing funds, the relationship was already damaged.</p></div></div>
+                                            <div class="cs-step"><div><h4>Key Insight</h4><p>Behavioral patterns like deposit drops, inactivity, and portfolio shifts were reliable churn signals. Account managers didn't need more data — they needed the CRM to flag the right moments automatically.</p></div></div>
+                                            <div class="cs-step"><div><h4>Solution</h4><p>Built an alert engine inside the CRM that monitored client portfolio activity and pushed prioritized, tailored actions directly to account and portfolio managers in real time.</p></div></div>
+                                            <div class="cs-results">
+                                                <div><div class="cs-result-value">+15%</div><div class="cs-result-label">Client Retention</div></div>
+                                                <div><div class="cs-result-value">+5%</div><div class="cs-result-label">ARPU Growth</div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Promotion divider -->
+                        <div class="promotion-divider">
+                            <span class="promotion-badge">&#8593; Promoted from within</span>
+                        </div>
+
+                        <!-- Role 2: Technical Support Team Lead (earlier) -->
+                        <div class="timeline-role-block">
+                            <div class="timeline-role-header">
+                                <div class="timeline-role">Technical Support Engineer Team Leader</div>
+                                <div class="timeline-date">2017 &ndash; 2019</div>
+                            </div>
+                            <ul class="timeline-items">
+                                <li><strong>Scope:</strong> Led a team of 8 engineers across SLA-driven support operations, managing critical escalations and defining KPIs for service excellence.</li>
+                                <li>Bridged Support and R&amp;D by converting recurring customer issues into product requirements, reducing overall incidents by 20% and urgent escalations by 30%.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="philosophy" id="philosophy">
+        <div class="section-inner">
+            <div class="section-header">
+                <div class="section-label">
+                    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                    How I Work
+                </div>
+                <h2 class="section-title">Product Philosophy</h2>
+                <p class="section-desc">The principles behind every product decision I make.</p>
+            </div>
+            <div class="philosophy-grid">
+                <div class="philosophy-card fade-in">
+                    <div class="phil-icon research">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    </div>
+                    <h3>Start with the user</h3>
+                    <p>Every feature begins with understanding the real pain point. I talk to users, watch session recordings, and dig into support tickets before writing a single requirement.</p>
+                </div>
+                <div class="philosophy-card fade-in">
+                    <div class="phil-icon data">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    </div>
+                    <h3>Validate with data</h3>
+                    <p>Intuition gets you to a hypothesis. Data gets you to a decision. I instrument everything, run A/B tests, and let metrics settle debates.</p>
+                </div>
+                <div class="philosophy-card fade-in">
+                    <div class="phil-icon ship">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3>Ship small, learn fast</h3>
+                    <p>I break big bets into small, shippable increments. Launch with the smallest version that tests the core assumption, then iterate based on real-world signal.</p>
                 </div>
             </div>
         </div>
