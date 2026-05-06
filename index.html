@@ -565,6 +565,26 @@
             letter-spacing: -0.01em;
         }
 
+        .company-logo-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .company-logo {
+            height: 28px;
+            width: auto;
+            flex-shrink: 0;
+        }
+
+        .payoneer-header .timeline-company,
+        .payoneer-header .timeline-role {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
         .timeline-tenure {
             font-size: 0.78rem;
             color: var(--text-tertiary);
@@ -794,7 +814,7 @@
 
         .cs-expand .cs-step p {
             font-size: 0.8125rem;
-            color: #374151;
+            color: #1e293b;
             line-height: 1.6;
         }
 
@@ -1127,7 +1147,7 @@
 
         .skills-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 1.5rem;
         }
 
@@ -1157,6 +1177,7 @@
         .skill-group-icon.ai { background: linear-gradient(135deg, #eff6ff, #dbeafe); color: #2563eb; }
         .skill-group-icon.saas { background: linear-gradient(135deg, #ecfdf5, #d1fae5); color: #059669; }
         .skill-group-icon.tech { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #d97706; }
+        .skill-group-icon.domain { background: linear-gradient(135deg, #fdf4ff, #f3e8ff); color: #9333ea; }
 
         .skill-group h3 {
             font-family: 'DM Sans', sans-serif;
@@ -1723,9 +1744,10 @@
                     Senior <span class="gradient-text">Product Manager</span> & AI Strategist
                 </h1>
                 <p class="hero-subtitle">
-                    6+ years building and scaling AI-driven B2B SaaS solutions in FinTech.
-                    I bridge complex technical capabilities with critical business needs to
-                    deliver high-impact products that drive enterprise growth.
+                    Product leader with 7+ years of experience owning B2B SaaS products for enterprise customers.
+                    I'm hands-on by default. I talk to users, sit with engineers, run my own discovery, and ship.
+                    I don't fill roadmaps with features to look busy. I move fast in ambiguous problem spaces,
+                    build the case for what should actually get delivered, and care about whether the solution makes a real difference.
                 </p>
                 <div class="hero-actions">
                     <a href="mailto:yonatanleket@gmail.com" class="btn btn-primary">
@@ -1739,7 +1761,7 @@
                 </div>
                 <div class="hero-stats">
                     <div class="hero-stat">
-                        <div class="hero-stat-value">6+</div>
+                        <div class="hero-stat-value">7+</div>
                         <div class="hero-stat-label">Years Experience</div>
                     </div>
                     <div class="hero-stat">
@@ -1786,7 +1808,7 @@
                     </div>
                     <div class="metric-value" data-counter="+10%">+10%</div>
                     <div class="metric-label">User Activation Increase</div>
-                    <div class="metric-context">KYC onboarding success rate after launching AI document validation checkpoint</div>
+                    <div class="metric-context">KYC onboarding success rate after shipping the GenAI document validation checkpoint at Payoneer</div>
                 </div>
                 <div class="metric-card retention-card fade-in">
                     <div class="metric-icon retention">
@@ -1802,7 +1824,7 @@
                     </div>
                     <div class="metric-value" data-counter="95%">95%</div>
                     <div class="metric-label">Classification Accuracy</div>
-                    <div class="metric-context">OCR-based document type detection across global onboarding flows</div>
+                    <div class="metric-context">LLM classification accuracy in production, with evals defined as the product spec before any code was written</div>
                 </div>
             </div>
         </div>
@@ -1823,13 +1845,19 @@
                 <div class="timeline-item fade-in">
                     <div class="timeline-header">
                         <div>
+                            <div class="company-logo-row">
+                                <svg class="company-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 45">
+                                    <path d="M27.374 11.087c.095 2.178 1.98 10.492 1.98 10.492.694 1.684 1.284 0 1.284 0 2.282-6.83-2.378-10.787-2.378-10.787-1.18-.694-.885.295-.885.295M54.4 9.898s2.282 1.588 0 1.883c0 0-8.514.99-14.85 6.925 0 0-9.494 8.314-13.06 17.418 0 0-1.19 0-.8-1.78s2.768-9.598 13.356-19.197c0 0 10.197-9.303 15.344-5.25" fill="#ff4800"/>
+                                    <path d="M11.084 23.072a5.58 5.58 0 0 0 1.215.121c1.935 0 3.246-1.25 3.246-2.838 0-1.423-1.007-1.935-2.317-1.935-.573 0-1.007.035-1.284.113zM10 16.893c.807-.2 2.022-.32 3.2-.32 1.25 0 2.55.26 3.428.955.772.6 1.224 1.467 1.224 2.656 0 1.58-.746 2.873-1.7 3.628-1.067.85-2.595 1.267-4.183 1.267-.477 0-.894-.06-1.25-.095l-.972 5.05H7.5zm14 5.147c-.234-.06-.538-.095-.946-.095-2.126 0-3.793 2.395-3.793 4.6 0 1.007.382 1.84 1.4 1.84 1.093 0 2.404-1.345 2.855-3.8zm-.93 7.993c0-.573.078-1.345.156-2.16h-.035c-.955 1.762-2.248 2.378-3.47 2.378-1.727 0-2.855-1.345-2.855-3.3 0-3.3 2.3-6.804 6.795-6.804a10.33 10.33 0 0 1 2.933.443l-1.007 5.034c-.278 1.423-.434 3.254-.4 4.4zm16.636-3.828c0 1.328.694 2.265 1.883 2.265 1.727 0 2.873-2.387 2.873-4.305 0-1-.45-2.222-1.84-2.222-1.85 0-2.916 2.456-2.916 4.26m7.134-2.057c0 3.3-2.282 6.1-5.572 6.1-2.44 0-3.94-1.684-3.94-3.983 0-3.272 2.282-6.1 5.572-6.1 2.595 0 3.94 1.866 3.94 3.992m.434 5.877l1.25-6.656.495-2.994h2.065l-.217 1.718h.035c.894-1.284 2.126-1.944 3.47-1.944 1.4 0 2.456.833 2.456 2.656a9.35 9.35 0 0 1-.174 1.588l-1.06 5.632H53.28l1.033-5.45c.06-.356.12-.772.12-1.154 0-.807-.304-1.4-1.215-1.4-1.05 0-2.395 1.276-2.812 3.532l-.833 4.46zm15.7-8.15c-1.45 0-2.395 1.293-2.673 2.456 2.378.026 3.905-.295 3.905-1.458 0-.616-.495-.998-1.232-.998m2.204 7.594c-.955.495-2.248.772-3.4.772-2.682 0-3.966-1.64-3.966-4 0-2.916 2.135-6.092 5.467-6.092 1.9 0 3.116 1.093 3.116 2.725 0 2.473-2.595 3.263-6.327 3.185-.035.338.043 1 .26 1.37.373.65 1.067 1 1.98 1a5.74 5.74 0 0 0 2.664-.634zm6.77-7.594c-1.44 0-2.395 1.293-2.673 2.456 2.378.026 3.905-.295 3.905-1.458 0-.616-.495-.998-1.232-.998m2.204 7.594c-.955.495-2.24.772-3.4.772-2.673 0-3.966-1.64-3.966-4 0-2.916 2.144-6.092 5.476-6.092 1.9 0 3.116 1.093 3.116 2.725 0 2.473-2.604 3.263-6.327 3.185-.043.338.035 1 .252 1.37.382.65 1.076 1 1.987 1 1.093 0 1.96-.278 2.656-.634zm1.345.555l1.137-5.945c.252-1.37.4-2.855.486-3.706h2.005l-.217 2.022h.06c.66-1.293 1.7-2.248 3-2.248.182 0 .356.026.52.026l-.46 2.256c-.12-.017-.278-.017-.434-.017-1.65 0-2.7 1.666-3.072 3.723l-.738 3.888z" fill="#333"/>
+                                </svg>
+                                <div class="timeline-company">Payoneer</div>
+                            </div>
                             <div class="timeline-role">Senior Product Manager</div>
-                            <div class="timeline-company">Payoneer</div>
                         </div>
                         <div class="timeline-date">2022 &ndash; Present</div>
                     </div>
                     <ul class="timeline-items">
-                        <li><strong>Scope:</strong> Led product planning and development of the Onboarding &amp; KYC product for global SMBs and enterprises, with a focus on managing risk, preventing fraud, reducing onboarding friction, and improving regulatory alignment.</li>
+                        <li><strong>Scope:</strong> Led the Onboarding and KYC product for global SMBs and enterprises. The core tension was reducing friction without loosening risk and fraud controls, inside a multi-tenant compliance environment across multiple markets.</li>
                         <li class="highlight-achievement expandable" onclick="this.classList.toggle('expanded')" tabindex="0" role="button" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('expanded');this.setAttribute('aria-expanded',this.classList.contains('expanded'))}">
                             <strong>AI Document Intelligence:</strong> Collaborated with the Data Science team to build and launch an internal GenAI document scanning model for KYC automation, driving a <strong>10% increase in successful user onboarding</strong> and meaningful gains in operational efficiency.
                             <div class="highlight-hint">
@@ -1869,6 +1897,8 @@
                             </div>
                         </li>
                         <li><strong>Cost Reduction:</strong> Designed and implemented an automated self-declaration workflow for document discrepancies, replacing a fully manual review process and saving <strong>$1.2M annually</strong> while improving customer trust in the verification flow.</li>
+                        <li><strong>Evals as the Spec:</strong> Defined accuracy thresholds, guardrails, and failure modes before writing a single requirement. Instrumented the pipeline to track quality continuously, not just at launch. That discipline is what got us to 95% in production.</li>
+                        <li><strong>Built it as a Platform:</strong> Didn't ship a one-off feature. The output was a configurable workflow used daily by ops, risk, and compliance. New document types and market-specific rules could be added without code changes, so other teams weren't blocked on R&amp;D to expand coverage.</li>
                     </ul>
                 </div>
 
@@ -1876,9 +1906,18 @@
                     <!-- Company header -->
                     <div class="timeline-header">
                         <div>
-                            <div class="timeline-company-main">Hexagon Technologies</div>
-                            <div class="timeline-company-desc">B2B FinTech providing SaaS trading platforms, CRM and portfolio management solutions for global brokerage firms.</div>
-                            <div class="timeline-tenure">5 years &middot; 2017 &ndash; 2022</div>
+                            <div class="company-logo-row">
+                                <svg class="company-logo" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <!-- green dot head -->
+                                    <circle cx="18" cy="6" r="4.5" fill="#a3c93a"/>
+                                    <!-- blue X body -->
+                                    <line x1="7" y1="14" x2="29" y2="32" stroke="#6bbde3" stroke-width="6" stroke-linecap="round"/>
+                                    <line x1="29" y1="14" x2="7" y2="32" stroke="#6bbde3" stroke-width="6" stroke-linecap="round"/>
+                                </svg>
+                                <div class="timeline-company-main">Hexagon Technologies</div>
+                            </div>
+                            <div class="timeline-company-desc">B2B FinTech SaaS platform for trading, CRM and portfolio management, serving global brokerage firms.</div>
+                            <div class="timeline-tenure">4 roles &middot; 5 years &middot; 2017 &ndash; 2022</div>
                         </div>
                     </div>
 
@@ -1890,10 +1929,10 @@
                                 <div class="timeline-date">2019 &ndash; 2022</div>
                             </div>
                             <ul class="timeline-items">
-                                <li><strong>Scope:</strong> Owned the full lifecycle of Payment and CRM products, using customer behavior data and market insights to set priorities and drive the roadmap, covering both new features and existing product improvements.</li>
-                                <li><strong>CRM Build and Launch:</strong> Oversaw the end-to-end build and launch of the company's CRM system, from initial concept through MVP. Managed design, production, testing, cost planning, and post-launch support.</li>
+                                <li><strong>Scope:</strong> Owned the CRM product roadmap for enterprise B2B accounts. Worked directly with R&amp;D, design, and customer success — focused on retention, and on building a product that account managers actually wanted to use every day.</li>
+                                <li><strong>CRM Build and Launch:</strong> Took the CRM from concept to production. Ran the full build: scoped requirements, worked through design and engineering, managed testing and cost planning, and handled post-launch. Zero prior CRM at the company.</li>
                                 <li class="highlight-achievement expandable" onclick="this.classList.toggle('expanded');this.setAttribute('aria-expanded',this.classList.contains('expanded'))" tabindex="0" role="button" aria-expanded="false" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.classList.toggle('expanded');this.setAttribute('aria-expanded',this.classList.contains('expanded'))}">
-                                    <strong>Smart Alert System:</strong> Designed and built a smart alert engine in the CRM that gave account and portfolio managers real-time, actionable insights on customer trading portfolios, boosting <strong>client retention by 15%</strong> and growing <strong>ARPU by 5%</strong>.
+                                    <strong>Smart Alert System:</strong> Ran deep discovery to understand late-stage churn. Pulled signals from session recordings, support tickets, and customer calls, then built a native CRM alert engine that mapped client drop-off signals directly to actions for account and portfolio managers. Boosted <strong>client retention by 15%</strong> and grew <strong>ARPU by 5%</strong>.
                                     <div class="highlight-hint">
                                         <span class="see-how"><span class="hint-expand">See details <span class="arrow">&rarr;</span></span><span class="hint-collapse">Hide details <span class="arrow">&uarr;</span></span></span>
                                     </div>
@@ -1909,6 +1948,8 @@
                                         </div>
                                     </div>
                                 </li>
+                                <li><strong>Rollout Strategy:</strong> Shipped to 5 enterprise accounts first, got signal, then expanded globally. Used feature flags to de-risk across customers running very different configurations.</li>
+                                <li><strong>API Work:</strong> Defined requirements for the REST API layer that connected the CRM to upstream data sources. Worked closely with engineers to make integrations stable enough that enterprise customers could self-serve without support involvement.</li>
                             </ul>
                         </div>
 
@@ -1917,15 +1958,30 @@
                             <span class="promotion-badge">&#8593; Promoted from within</span>
                         </div>
 
-                        <!-- Role 2: Technical Support Team Lead (earlier) -->
+                        <!-- Role 2: Technical Support Team Leader -->
                         <div class="timeline-role-block">
                             <div class="timeline-role-header">
-                                <div class="timeline-role">Technical Support Engineer Team Leader</div>
-                                <div class="timeline-date">2017 &ndash; 2019</div>
+                                <div class="timeline-role">Technical Support Team Leader</div>
+                                <div class="timeline-date">2018 &ndash; 2019</div>
                             </div>
                             <ul class="timeline-items">
-                                <li><strong>Scope:</strong> Led a team of 8 engineers across SLA-driven support operations, managing critical escalations and defining KPIs for service excellence.</li>
-                                <li>Bridged Support and R&amp;D by converting recurring customer issues into product requirements, reducing overall incidents by 20% and urgent escalations by 30%.</li>
+                                <li>Managed 8 engineers between customer escalations and core R&amp;D. Built the feedback loop that fed product decisions upstream.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Promotion divider -->
+                        <div class="promotion-divider">
+                            <span class="promotion-badge">&#8593; Promoted from within</span>
+                        </div>
+
+                        <!-- Role 3: Technical Support Engineer -->
+                        <div class="timeline-role-block">
+                            <div class="timeline-role-header">
+                                <div class="timeline-role">Technical Support Engineer</div>
+                                <div class="timeline-date">2017 &ndash; 2018</div>
+                            </div>
+                            <ul class="timeline-items">
+                                <li>Turned support tickets into structured requirements. Reduced platform incidents by 20%.</li>
                             </ul>
                         </div>
                     </div>
@@ -1948,24 +2004,27 @@
             <div class="philosophy-grid">
                 <div class="philosophy-card fade-in">
                     <div class="phil-icon research">
-                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                        <!-- Compass icon -->
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
                     </div>
-                    <h3>Start with the user</h3>
-                    <p>Every feature begins with understanding the real pain point. I talk to users, watch session recordings, and dig into support tickets before writing a single requirement.</p>
+                    <h3>The bottleneck is judgment, not execution</h3>
+                    <p>Anyone can ship a demo in a day now. The real challenge is knowing if it solves a problem and how to measure it. I spend my time on the "what" and "why" because that is the part that didn't get easier.</p>
                 </div>
                 <div class="philosophy-card fade-in">
                     <div class="phil-icon data">
-                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                        <!-- Test/eval checklist icon -->
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
                     </div>
-                    <h3>Validate with data</h3>
-                    <p>Intuition gets you to a hypothesis. Data gets you to a decision. I instrument everything, run A/B tests, and let metrics settle debates.</p>
+                    <h3>Evals are the spec</h3>
+                    <p>For AI, "it works" is not an answer. I define accuracy thresholds, guardrails, and edge cases before we build. At Payoneer, I shipped GenAI at 95% accuracy because we treated quality as the system requirement, not just a QA task.</p>
                 </div>
                 <div class="philosophy-card fade-in">
                     <div class="phil-icon ship">
-                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                        <!-- Robot icon -->
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/><circle cx="8" cy="16" r="1" fill="currentColor"/><circle cx="16" cy="16" r="1" fill="currentColor"/><path d="M6 11V9a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/></svg>
                     </div>
-                    <h3>Ship small, learn fast</h3>
-                    <p>I break big bets into small, shippable increments. Launch with the smallest version that tests the core assumption, then iterate based on real-world signal.</p>
+                    <h3>AI is my co-pilot and my product</h3>
+                    <p>I don't just build AI features. I use it daily to query data, prototype, and speed up research. Integrating it into my workflow lets me maintain high velocity and stay focused on the decisions that actually move the needle.</p>
                 </div>
             </div>
         </div>
@@ -2092,14 +2151,13 @@
                     <div class="skill-group-icon ai">
                         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                     </div>
-                    <h3>AI & Product Strategy</h3>
+                    <h3>AI &amp; Data</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Real-time AI Checkpoints</span>
-                        <span class="skill-tag">OCR Workflow Design</span>
+                        <span class="skill-tag">Production GenAI</span>
+                        <span class="skill-tag">LLM-based Workflows</span>
+                        <span class="skill-tag">Evals &amp; Quality Measurement</span>
+                        <span class="skill-tag">Hybrid AI Architectures</span>
                         <span class="skill-tag">Prompt Engineering</span>
-                        <span class="skill-tag">LLM UX/UI</span>
-                        <span class="skill-tag">Context Logic</span>
-                        <span class="skill-tag">NLP</span>
                         <span class="skill-tag">Document Intelligence</span>
                     </div>
                 </div>
@@ -2107,28 +2165,40 @@
                     <div class="skill-group-icon saas">
                         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
                     </div>
-                    <h3>B2B SaaS Expertise</h3>
+                    <h3>Platform &amp; Technical</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Multi-tenant Architecture</span>
-                        <span class="skill-tag">Client Implementation</span>
                         <span class="skill-tag">REST APIs</span>
-                        <span class="skill-tag">Payment Ecosystems</span>
-                        <span class="skill-tag">Strategic Roadmapping</span>
-                        <span class="skill-tag">Client Success</span>
+                        <span class="skill-tag">Multi-tenant SaaS</span>
+                        <span class="skill-tag">Internal Tooling</span>
+                        <span class="skill-tag">System Architecture</span>
+                        <span class="skill-tag">Configurability</span>
                     </div>
                 </div>
                 <div class="skill-group fade-in">
                     <div class="skill-group-icon tech">
                         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                     </div>
-                    <h3>Technical & Analytical</h3>
+                    <h3>Product Craft</h3>
                     <div class="skill-tags">
-                        <span class="skill-tag">Mixpanel / Amplitude</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">System Architecture</span>
-                        <span class="skill-tag">Agile / Scrum</span>
-                        <span class="skill-tag">Business Intelligence</span>
-                        <span class="skill-tag">IBM Cognos BI</span>
+                        <span class="skill-tag">Roadmapping</span>
+                        <span class="skill-tag">RICE Prioritization</span>
+                        <span class="skill-tag">User Discovery</span>
+                        <span class="skill-tag">A/B Testing</span>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Jira / Linear</span>
+                    </div>
+                </div>
+                <div class="skill-group fade-in">
+                    <div class="skill-group-icon domain">
+                        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+                    </div>
+                    <h3>Domain</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">KYC &amp; Onboarding</span>
+                        <span class="skill-tag">Compliance Workflows</span>
+                        <span class="skill-tag">B2B Enterprise SaaS</span>
+                        <span class="skill-tag">FinTech</span>
+                        <span class="skill-tag">Payment Ecosystems</span>
                     </div>
                 </div>
             </div>
