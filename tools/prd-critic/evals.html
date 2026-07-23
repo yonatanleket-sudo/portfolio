@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRD-Critic — Evaluation Methodology | Yonatan Leket</title>
+    <meta name="description" content="Published evaluation protocol for PRD-Critic: what's measured, the label guide, and the honest not-yet-run state.">
+    <style>
+        @font-face {
+            font-family: 'Inter'; font-style: normal; font-weight: 300 800; font-display: swap;
+            src: url('../../fonts/inter-latin.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'DM Sans'; font-style: normal; font-weight: 400 700; font-display: swap;
+            src: url('../../fonts/dm-sans-latin.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 700; font-display: swap;
+            src: url('../../fonts/jetbrains-mono-latin.woff2') format('woff2');
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #2563eb; --primary-light: #3b82f6; --primary-dark: #1d4ed8; --primary-bg: #eff6ff;
+            --text-primary: #16140f; --text-secondary: #4a4640; --text-tertiary: #6e6a5c;
+            --bg-white: #ffffff; --bg-light: #f7f5f0; --bg-subtle: #f0ece3;
+            --border: #e2dbcc; --border-light: #ece5d6;
+            --radius: 10px; --radius-sm: 6px;
+            --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+        }
+        html { font-size: 16px; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--text-primary); background: var(--bg-light); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        a { color: var(--primary); }
+        .wrap { max-width: 880px; margin: 0 auto; padding: 0 1.5rem; }
+        header { border-bottom: 1px solid var(--border-light); background: var(--bg-white); position: sticky; top: 0; z-index: 10; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+        .back-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: 600; text-decoration: none; color: var(--text-secondary); }
+        .back-link:hover { color: var(--primary); }
+        .header-links { display: flex; gap: 1.5rem; align-items: center; }
+        .header-links a { font-size: 0.875rem; font-weight: 600; text-decoration: none; color: var(--text-secondary); }
+        .header-links a:hover { color: var(--primary); }
+        .header-links a.current { color: var(--primary); }
+        main { padding: 3.5rem 0 5rem; }
+        h1 { font-family: 'DM Sans', sans-serif; font-size: 2.25rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1rem; }
+        .lede { font-size: 1.0625rem; color: var(--text-secondary); margin-bottom: 2rem; max-width: 660px; }
+
+        .status-banner {
+            display: flex; gap: 0.875rem; align-items: flex-start;
+            background: #fffbeb; border: 1px solid #fde68a; border-left: 3px solid #d97706;
+            border-radius: var(--radius-sm); padding: 1.125rem 1.375rem; margin-bottom: 3rem;
+        }
+        .status-banner .dot { width: 8px; height: 8px; border-radius: 50%; background: #d97706; margin-top: 0.4rem; flex-shrink: 0; }
+        .status-banner strong { display: block; font-size: 0.9375rem; margin-bottom: 0.25rem; color: #92400e; }
+        .status-banner p { font-size: 0.875rem; color: #78350f; line-height: 1.6; }
+
+        section.block { margin-bottom: 3rem; }
+        h2 { font-family: 'DM Sans', sans-serif; font-size: 1.375rem; font-weight: 700; letter-spacing: -0.015em; margin-bottom: 0.875rem; }
+        p { margin-bottom: 0.875rem; font-size: 0.9375rem; color: var(--text-secondary); }
+        p:last-child { margin-bottom: 0; }
+        strong { color: var(--text-primary); }
+
+        ul.plain { list-style: none; margin-bottom: 0.875rem; }
+        ul.plain li {
+            font-size: 0.9375rem; color: var(--text-secondary); padding-left: 1.2rem; position: relative;
+            margin-bottom: 0.6rem; line-height: 1.6;
+        }
+        ul.plain li::before {
+            content: ''; position: absolute; left: 0; top: 0.6em; width: 5px; height: 5px; border-radius: 50%;
+            background: var(--text-tertiary);
+        }
+        ul.plain li.no { color: #b91c1c; }
+        ul.plain li.no::before { background: #b91c1c; }
+
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.875rem; }
+        th, td { text-align: left; padding: 0.625rem 0.875rem; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+        th { font-family: var(--font-mono); font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-tertiary); font-weight: 600; }
+        td.score { font-family: var(--font-mono); font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+        .card-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .stat-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 1.125rem; text-align: center; }
+        .stat-card .num { font-family: var(--font-mono); font-size: 1.75rem; font-weight: 700; color: var(--primary); }
+        .stat-card .label { font-size: 0.75rem; color: var(--text-tertiary); margin-top: 0.25rem; }
+
+        .placeholder-table {
+            background: var(--bg-white); border: 1px dashed var(--border); border-radius: var(--radius);
+            padding: 2rem; text-align: center; color: var(--text-tertiary); font-size: 0.875rem; font-family: var(--font-mono);
+        }
+
+        code { font-family: var(--font-mono); font-size: 0.85em; background: var(--bg-subtle); padding: 0.1rem 0.35rem; border-radius: 3px; }
+
+        footer { border-top: 1px solid var(--border-light); padding: 2rem 0; text-align: center; font-size: 0.8125rem; color: var(--text-tertiary); }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="wrap header-inner">
+            <a href="../../index.html" class="back-link">&larr; Yonatan Leket</a>
+            <div class="header-links">
+                <a href="index.html">PRD-Critic</a>
+                <a href="evals.html" class="current">Eval Methodology</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="wrap">
+            <h1>Evaluation Methodology</h1>
+            <p class="lede">How PRD-Critic's scores are checked against independent human judgment &mdash; published before the results exist, not after.</p>
+
+            <div class="status-banner">
+                <span class="dot"></span>
+                <div>
+                    <strong>Pilot not yet run.</strong>
+                    <p>The protocol and label guide below are committed. Blind labeling of the golden set hasn't happened yet. This page will be updated with real per-dimension results once it has &mdash; it will never show placeholder or implied numbers in the meantime.</p>
+                </div>
+            </div>
+
+            <section class="block">
+                <h2>What this measures</h2>
+                <p>PRD-Critic's per-dimension scores compared against <strong>independent, blind human labels</strong> on the same set of PRDs &mdash; not the critic's output judged by another LLM call using the same rubric. That design would be close to circular: a model grading its own instructions tends to agree with itself. This protocol exists specifically to avoid that.</p>
+                <p>This is a <strong>pilot</strong>, not a benchmark: about 18 PRDs, one labeler, no adjudication pass. It will report exactly what it finds and nothing more.</p>
+            </section>
+
+            <section class="block">
+                <h2>What is not claimed</h2>
+                <ul class="plain">
+                    <li class="no">No single headline "alignment rate" or accuracy percentage</li>
+                    <li class="no">No claim that results generalize beyond the labeled golden set</li>
+                    <li class="no">No inter-rater reliability claim &mdash; there is one rater; a second labeler and adjudication is future work, not promised on a timeline</li>
+                    <li class="no">No claim that the rubric itself is objectively correct &mdash; it's one experienced PM's judgment, made explicit and checkable rather than left implicit</li>
+                </ul>
+            </section>
+
+            <section class="block">
+                <h2>Dataset</h2>
+                <div class="card-row">
+                    <div class="stat-card"><div class="num">18</div><div class="label">original PRDs</div></div>
+                    <div class="stat-card"><div class="num">3</div><div class="label">feature archetypes</div></div>
+                    <div class="stat-card"><div class="num">6</div><div class="label">rubric dimensions</div></div>
+                </div>
+                <p>All 18 are original and fictionalized &mdash; invented companies, invented features, invented numbers &mdash; spanning data/ML features, workflow-automation features, and pure-UI features (6 each), and deliberately spanning quality levels so scores aren't compressed at one end. None describe or derive from any real employer's product or data. Full set: <code>tools/prd-critic/golden-set.json</code>.</p>
+                <p>This set is kept separate from the canned-demo PRD shown on the <a href="index.html">tool page</a> &mdash; that critique is already public, so it can't be used for blind labeling without contaminating the result.</p>
+            </section>
+
+            <section class="block">
+                <h2>Label guide</h2>
+                <p>For each dimension, scored 1&ndash;5 independently, without seeing the critic's output for that PRD:</p>
+                <table>
+                    <tr><th>Score</th><th>Meaning</th><th>Anchor</th></tr>
+                    <tr><td class="score">1</td><td>Missing / unusable</td><td>Not addressed, or too vague to act on</td></tr>
+                    <tr><td class="score">2</td><td>Seriously underspecified</td><td>Gestured at, missing the specifics needed to build or evaluate against it</td></tr>
+                    <tr><td class="score">3</td><td>Adequate</td><td>Enough to proceed; gaps a reviewer would flag but not block on</td></tr>
+                    <tr><td class="score">4</td><td>Clear</td><td>Specific, falsifiable, actionable with only minor gaps</td></tr>
+                    <tr><td class="score">5</td><td>Complete</td><td>Nothing an experienced reviewer would add</td></tr>
+                </table>
+            </section>
+
+            <section class="block">
+                <h2>Blinding procedure</h2>
+                <ol style="padding-left: 1.25rem; font-size: 0.9375rem; color: var(--text-secondary);">
+                    <li style="margin-bottom: 0.5rem;">Labels are recorded before the critic is run against that PRD.</li>
+                    <li style="margin-bottom: 0.5rem;">Labeling happens in one sitting where practical, to reduce drift in how anchors are applied across the set.</li>
+                    <li>The critic then runs once per PRD &mdash; no re-rolling for a more favorable output &mdash; and scores are compared.</li>
+                </ol>
+            </section>
+
+            <section class="block">
+                <h2>Reporting (once labeling is complete)</h2>
+                <p>For each of the 6 dimensions, across the full set:</p>
+                <ul class="plain">
+                    <li>Exact agreement rate (critic score equals label)</li>
+                    <li>Within-1 agreement rate (scores differ by at most 1 point)</li>
+                    <li>Mean signed difference &mdash; reveals systematic leniency or harshness per dimension</li>
+                    <li>2&ndash;3 concrete disagreement examples per dimension, with both scores and enough PRD context to see why they diverged</li>
+                </ul>
+                <div class="placeholder-table">results table renders here once golden-set.json contains real labels</div>
+            </section>
+
+            <section class="block">
+                <h2>Future work</h2>
+                <p>Noted for honesty, not promised on a timeline: a second independent labeler with an adjudication pass on disagreements (to get an actual inter-rater number instead of one person's judgment), expanding the set past 18&ndash;20, and a same-labeler re-label after a time gap to estimate how much disagreement is labeler noise versus real critic error.</p>
+                <p>Full protocol: <code>tools/prd-critic/protocol.md</code>.</p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="wrap">Part of <a href="../../index.html">yonatanleket.github.io</a></div>
+    </footer>
+</body>
+</html>

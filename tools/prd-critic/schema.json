@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PRDCritique",
+  "description": "Structured output contract for PRD-Critic. Shared by the local live runner (passed as output_config.format.schema) and the schema fixture test (tools/prd-critic/local/schema.test.mjs), which validates the committed canned-demo output against this file.",
+  "type": "object",
+  "properties": {
+    "overall_summary": {
+      "type": "string",
+      "description": "2-4 sentence summary of the PRD's overall readiness to build."
+    },
+    "overall_recommendation": {
+      "type": "string",
+      "enum": ["ready_to_build", "needs_revision", "not_ready"]
+    },
+    "dimensions": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "enum": [
+              "Problem Clarity",
+              "Success Metrics",
+              "Scope & Kill Criteria",
+              "Risks & Failure Modes",
+              "Edge Cases",
+              "AI-Specific Readiness"
+            ]
+          },
+          "score": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 5,
+            "description": "1 = missing/unusable, 3 = present but underspecified, 5 = clear and complete"
+          },
+          "rationale": {
+            "type": "string",
+            "description": "1-3 sentences explaining the score, specific to this PRD."
+          },
+          "supporting_quote": {
+            "type": ["string", "null"],
+            "description": "A short verbatim quote from the PRD backing the rationale, or null if the gap is an absence (nothing to quote)."
+          }
+        },
+        "required": ["name", "score", "rationale", "supporting_quote"],
+        "additionalProperties": false
+      }
+    },
+    "top_risks": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "The risks most likely to cause a costly rebuild or a production incident if unaddressed, ranked highest-first."
+    },
+    "missing_sections": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Sections/considerations absent from the PRD entirely, not just weakly written."
+    }
+  },
+  "required": ["overall_summary", "overall_recommendation", "dimensions", "top_risks", "missing_sections"],
+  "additionalProperties": false
+}

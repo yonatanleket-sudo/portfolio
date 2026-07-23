@@ -4,10 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yonatan Leket | Senior Product Manager</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 300 800;
+            font-display: swap;
+            src: url('fonts/inter-latin.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-family: 'DM Sans';
+            font-style: normal;
+            font-weight: 400 700;
+            font-display: swap;
+            src: url('fonts/dm-sans-latin.woff2') format('woff2');
+        }
+
+        @font-face {
+            font-family: 'JetBrains Mono';
+            font-style: normal;
+            font-weight: 400 700;
+            font-display: swap;
+            src: url('fonts/jetbrains-mono-latin.woff2') format('woff2');
+        }
+
         *, *::before, *::after {
             margin: 0;
             padding: 0;
@@ -19,22 +40,23 @@
             --primary-light: #3b82f6;
             --primary-dark: #1d4ed8;
             --primary-bg: #eff6ff;
-            --accent: #0ea5e9;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --text-tertiary: #94a3b8;
+            --accent: var(--primary-dark);
+            --text-primary: #16140f;
+            --text-secondary: #4a4640;
+            --text-tertiary: #6e6a5c;
             --bg-white: #ffffff;
-            --bg-light: #f8fafc;
-            --bg-subtle: #f1f5f9;
-            --border: #e2e8f0;
-            --border-light: #f1f5f9;
-            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
-            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
-            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
-            --radius: 16px;
-            --radius-sm: 10px;
-            --radius-xs: 6px;
+            --bg-light: #f7f5f0;
+            --bg-subtle: #f0ece3;
+            --border: #e2dbcc;
+            --border-light: #ece5d6;
+            --shadow-sm: 0 1px 2px rgba(20,15,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(20,15,0,0.07), 0 2px 4px -2px rgba(20,15,0,0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(20,15,0,0.08), 0 4px 6px -4px rgba(20,15,0,0.04);
+            --shadow-xl: 0 20px 25px -5px rgba(20,15,0,0.08), 0 8px 10px -6px rgba(20,15,0,0.04);
+            --radius: 10px;
+            --radius-sm: 6px;
+            --radius-xs: 3px;
+            --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
         }
 
         html {
@@ -48,6 +70,16 @@
             background: var(--bg-light);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
         }
 
         /* ===== NAVIGATION ===== */
@@ -168,7 +200,7 @@
             left: -10%;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.05) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(29, 78, 216, 0.05) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -217,10 +249,10 @@
 
         .hero h1 {
             font-family: 'DM Sans', sans-serif;
-            font-size: 3.5rem;
+            font-size: 3.75rem;
             font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -0.03em;
+            line-height: 1.08;
+            letter-spacing: -0.04em;
             color: var(--text-primary);
             margin-bottom: 1rem;
         }
@@ -296,9 +328,9 @@
         }
 
         .hero-stat-value {
-            font-family: 'DM Sans', sans-serif;
+            font-family: var(--font-mono);
             font-size: 1.75rem;
-            font-weight: 800;
+            font-weight: 700;
             color: var(--text-primary);
             letter-spacing: -0.02em;
         }
@@ -393,9 +425,9 @@
 
         .section-title {
             font-family: 'DM Sans', sans-serif;
-            font-size: 2.25rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.035em;
             color: var(--text-primary);
             margin-bottom: 0.75rem;
         }
@@ -470,10 +502,10 @@
         .metric-icon.accuracy { background: #f0f9ff; color: #0284c7; }
 
         .metric-value {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 2.25rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
+            font-family: var(--font-mono);
+            font-size: 2.125rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
             color: var(--text-primary);
             margin-bottom: 0.375rem;
         }
@@ -653,9 +685,10 @@
         }
 
         .timeline-date {
-            font-size: 0.8125rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
             color: var(--text-tertiary);
-            font-weight: 600;
+            font-weight: 500;
             background: var(--bg-subtle);
             padding: 0.375rem 1rem;
             border-radius: 100px;
@@ -840,9 +873,9 @@
         }
 
         .cs-expand .cs-result-value {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
+            font-family: var(--font-mono);
+            font-size: 1.375rem;
+            font-weight: 700;
             color: var(--primary);
             line-height: 1;
         }
@@ -863,6 +896,15 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
+        }
+
+        .projects-grid.projects-grid-single {
+            grid-template-columns: minmax(0, 620px);
+            justify-content: center;
+        }
+
+        .projects-grid-single .project-preview {
+            height: 280px;
         }
 
         .project-card {
@@ -1430,7 +1472,7 @@
             }
 
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2.75rem;
             }
 
             .hero-stats {
@@ -1536,7 +1578,7 @@
             animation: float-orb 18s ease-in-out infinite reverse;
             width: 520px;
             height: 520px;
-            background: radial-gradient(circle, rgba(14, 165, 233, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(29, 78, 216, 0.08) 0%, transparent 70%);
         }
 
         /* Photo glow pulse */
@@ -1551,7 +1593,7 @@
 
         /* Stronger gradient text */
         .hero h1 .gradient-text {
-            background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 40%, #0ea5e9 100%);
+            background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #60a5fa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -1595,7 +1637,7 @@
         .project-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(135deg, rgba(29, 78, 216, 0.93) 0%, rgba(14, 165, 233, 0.89) 100%);
+            background: linear-gradient(135deg, rgba(29, 78, 216, 0.93) 0%, rgba(37, 99, 235, 0.89) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1742,7 +1784,7 @@
         <div class="hero-inner">
             <div class="hero-content">
                 <h1>
-                    Senior <span class="gradient-text">Product Manager</span> & AI Strategist
+                    Senior <span class="gradient-text">Product Manager</span> &amp; AI Strategist
                 </h1>
                 <p class="hero-subtitle">
                     Product leader with 7+ years owning B2B SaaS products for enterprise customers.
@@ -1776,7 +1818,7 @@
             </div>
             <div class="hero-photo-wrapper">
                 <div class="hero-photo">
-                    <img src="profile.jpg" alt="Yonatan Leket" onerror="this.style.background='linear-gradient(135deg, #2563eb22, #0ea5e922)'; this.style.display='flex';">
+                    <img src="profile.jpg" alt="Yonatan Leket" onerror="this.style.background='linear-gradient(135deg, #2563eb22, #1d4ed822)'; this.style.display='flex';">
                 </div>
             </div>
         </div>
@@ -2035,97 +2077,42 @@
                     <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
                     Side Projects
                 </div>
-                <h2 class="section-title">Applications I Built</h2>
-                <p class="section-desc">Hands-on product thinking meets execution. AI-powered tools I designed and built.</p>
+                <h2 class="section-title">A Tool With a Judgment Layer</h2>
+                <p class="section-desc">Not another AI wrapper. A hand-built rubric doing the evaluation work, with the methodology published alongside it.</p>
             </div>
-            <div class="projects-grid">
+            <div class="projects-grid projects-grid-single">
                 <div class="project-card fade-in">
                     <div class="project-preview">
-                        <img src="screenshots/forge-ai.jpg" alt="Forge AI Screenshot" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#eff6ff,#dbeafe);color:#2563eb;font-size:2.5rem;font-weight:800;font-family:DM Sans,sans-serif&quot;>Forge AI</div>'">
+                        <img src="screenshots/prd-critic.jpg" alt="PRD-Critic Screenshot" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#eff6ff,#dbeafe);color:#2563eb;font-size:2.25rem;font-weight:800;font-family:DM Sans,sans-serif&quot;>PRD-Critic</div>'">
                         <div class="project-overlay">
-                            <a href="https://forge-three-mu.vercel.app/" target="_blank" class="project-overlay-btn">
-                                Open App
+                            <a href="tools/prd-critic/index.html" class="project-overlay-btn">
+                                Open Tool
                                 <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                             </a>
                         </div>
                     </div>
                     <div class="project-info">
                         <div class="project-tag">
-                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                            AI Content Tool
+                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 12 2 2 4-4"/></svg>
+                            Judgment Layer &middot; Eval Harness
                         </div>
-                        <div class="project-name">Forge AI</div>
-                        <p class="project-desc">AI-powered content repurposing platform. Paste long-form content, select your industry and tone, and generate compliant social media posts instantly.</p>
+                        <div class="project-name">PRD-Critic</div>
+                        <p class="project-desc">Critiques PRDs against a rubric instead of writing them. Scores problem clarity, success metrics, kill criteria, failure modes, edge cases, and AI-specific readiness &mdash; then publishes how well those scores hold up against independent human judgment.</p>
                         <div class="project-tech">
-                            <span class="project-tech-badge">React</span>
-                            <span class="project-tech-badge">OpenAI</span>
-                            <span class="project-tech-badge">Tailwind</span>
-                            <span class="project-tech-badge">TypeScript</span>
+                            <span class="project-tech-badge">Claude API</span>
+                            <span class="project-tech-badge">Structured Outputs</span>
+                            <span class="project-tech-badge">Node.js</span>
                         </div>
-                        <a href="https://forge-three-mu.vercel.app/" target="_blank" class="project-link">
-                            View Live App
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card fade-in">
-                    <div class="project-preview">
-                        <img src="screenshots/kodo.jpg" alt="Kodo Screenshot" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);color:#0284c7;font-size:2.5rem;font-weight:800;font-family:DM Sans,sans-serif&quot;>Kodo</div>'">
-                        <div class="project-overlay">
-                            <a href="https://kodo-gamma.vercel.app/" target="_blank" class="project-overlay-btn">
-                                Open App
-                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        <div style="display:flex; gap:1.5rem; flex-wrap:wrap;">
+                            <a href="tools/prd-critic/index.html" class="project-link">
+                                Open Tool
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </a>
+                            <a href="tools/prd-critic/evals.html" class="project-link">
+                                Eval Methodology
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                             </a>
                         </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-tag">
-                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/></svg>
-                            AI Meetings
-                        </div>
-                        <div class="project-name">Kodo</div>
-                        <p class="project-desc">Upload meeting recordings and get AI-powered summaries, key decisions, and action items. Supports MP3, WAV, MP4, and WEBM formats.</p>
-                        <div class="project-tech">
-                            <span class="project-tech-badge">React</span>
-                            <span class="project-tech-badge">Whisper AI</span>
-                            <span class="project-tech-badge">TypeScript</span>
-                            <span class="project-tech-badge">Supabase</span>
-                        </div>
-                        <a href="https://kodo-gamma.vercel.app/" target="_blank" class="project-link">
-                            View Live App
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="project-card fade-in">
-                    <div class="project-preview">
-                        <img src="screenshots/tether.jpg" alt="Tether Screenshot" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#fef3c7,#fde68a);color:#d97706;font-size:2.5rem;font-weight:800;font-family:DM Sans,sans-serif&quot;>Tether</div>'">
-                        <div class="project-overlay">
-                            <a href="https://tether-express.vercel.app/" target="_blank" class="project-overlay-btn">
-                                Open App
-                                <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="project-info">
-                        <div class="project-tag">
-                            <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-                            CRM Platform
-                        </div>
-                        <div class="project-name">Tether</div>
-                        <p class="project-desc">Client and project management dashboard for freelancers. Track clients, projects, follow-ups, and activity with a clean, intuitive interface.</p>
-                        <div class="project-tech">
-                            <span class="project-tech-badge">React</span>
-                            <span class="project-tech-badge">Tailwind</span>
-                            <span class="project-tech-badge">Supabase</span>
-                            <span class="project-tech-badge">TypeScript</span>
-                        </div>
-                        <a href="https://tether-express.vercel.app/" target="_blank" class="project-link">
-                            View Live App
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        </a>
                     </div>
                 </div>
             </div>
@@ -2315,8 +2302,14 @@
         });
 
         // ── Count-up animation ────────────────────────────────
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         function animateCounter(el) {
             const raw = el.dataset.counter;
+            if (prefersReducedMotion) {
+                el.textContent = raw;
+                return;
+            }
             const prefix  = raw.startsWith('$') ? '$' : raw.startsWith('+') ? '+' : '';
             const suffix  = raw.endsWith('M') ? 'M' : raw.endsWith('%') ? '%' : raw.endsWith('+') ? '+' : '';
             const numStr  = raw.replace(/[$+%M]/g, '');

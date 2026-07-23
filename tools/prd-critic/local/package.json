@@ -1,0 +1,14 @@
+{
+  "name": "prd-critic-local-runner",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local live runner for PRD-Critic. Reads ANTHROPIC_API_KEY from the environment. The public page at tools/prd-critic/index.html never calls this or any API — it only shows a precomputed canned demo.",
+  "scripts": {
+    "critique": "node run.mjs",
+    "test": "node schema.test.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.113.0"
+  }
+}

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRD-Critic | Yonatan Leket</title>
+    <meta name="description" content="Critiques PRDs against a rubric instead of writing them. Canned demo, visible rubric, and a published evaluation protocol.">
+    <style>
+        @font-face {
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 300 800;
+            font-display: swap;
+            src: url('../../fonts/inter-latin.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'DM Sans';
+            font-style: normal;
+            font-weight: 400 700;
+            font-display: swap;
+            src: url('../../fonts/dm-sans-latin.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'JetBrains Mono';
+            font-style: normal;
+            font-weight: 400 700;
+            font-display: swap;
+            src: url('../../fonts/jetbrains-mono-latin.woff2') format('woff2');
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --primary-bg: #eff6ff;
+            --text-primary: #16140f;
+            --text-secondary: #4a4640;
+            --text-tertiary: #6e6a5c;
+            --bg-white: #ffffff;
+            --bg-light: #f7f5f0;
+            --bg-subtle: #f0ece3;
+            --border: #e2dbcc;
+            --border-light: #ece5d6;
+            --radius: 10px;
+            --radius-sm: 6px;
+            --radius-xs: 3px;
+            --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Consolas, monospace;
+            --shadow-md: 0 4px 6px -1px rgba(20,15,0,0.07), 0 2px 4px -2px rgba(20,15,0,0.05);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        html { font-size: 16px; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-light);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: var(--primary); }
+
+        .wrap { max-width: 1040px; margin: 0 auto; padding: 0 1.5rem; }
+
+        header {
+            border-bottom: 1px solid var(--border-light);
+            background: var(--bg-white);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-secondary);
+        }
+        .back-link:hover { color: var(--primary); }
+
+        .header-links { display: flex; gap: 1.5rem; align-items: center; }
+        .header-links a { font-size: 0.875rem; font-weight: 600; text-decoration: none; color: var(--text-secondary); }
+        .header-links a:hover { color: var(--primary); }
+        .header-links a.current { color: var(--primary); }
+
+        main { padding: 3.5rem 0 5rem; }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 500;
+            padding: 0.375rem 0.875rem;
+            background: var(--primary-bg);
+            color: var(--primary-dark);
+            border: 1px solid rgba(37,99,235,0.18);
+            border-radius: 100px;
+            margin-bottom: 1.25rem;
+        }
+        .badge::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #16a34a;
+        }
+
+        h1 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 2.75rem;
+            font-weight: 800;
+            letter-spacing: -0.035em;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+
+        .lede {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 660px;
+            margin-bottom: 3rem;
+        }
+
+        section.block { margin-bottom: 3.5rem; }
+
+        h2.block-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.375rem;
+            font-weight: 700;
+            letter-spacing: -0.015em;
+            margin-bottom: 0.5rem;
+        }
+
+        .block-desc {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Rubric grid */
+        .rubric-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .rubric-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+        }
+        .rubric-card .n {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .rubric-card h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.375rem;
+        }
+        .rubric-card p { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.55; }
+
+        /* Demo layout */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .panel {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 0.875rem 1.25rem;
+            border-bottom: 1px solid var(--border-light);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fictional-tag {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            color: #b45309;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            padding: 0.15rem 0.5rem;
+            border-radius: 100px;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .prd-body {
+            padding: 1.5rem;
+            font-size: 0.875rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            max-height: 720px;
+            overflow-y: auto;
+        }
+        .prd-body h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9375rem;
+            margin: 1.25rem 0 0.4rem;
+        }
+        .prd-body h3:first-child { margin-top: 0; }
+        .prd-body p, .prd-body ul { margin-bottom: 0.6rem; }
+        .prd-body ul { padding-left: 1.25rem; }
+        .prd-body .prd-meta { font-size: 0.75rem; color: var(--text-tertiary); margin-bottom: 1rem; }
+
+        .critique-body { padding: 1.5rem; }
+
+        .rec-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.75rem;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            margin-bottom: 1rem;
+        }
+        .rec-pill.needs_revision { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; }
+        .rec-pill.ready_to_build { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+        .rec-pill.not_ready { background: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        .overall-summary { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.6; }
+
+        .dim {
+            margin-bottom: 1.125rem;
+            padding-bottom: 1.125rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .dim:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .dim-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.375rem;
+        }
+        .dim-name { font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 700; }
+        .dim-score { font-family: var(--font-mono); font-size: 0.8125rem; font-weight: 700; color: var(--primary); }
+
+        .dim-bar { height: 5px; background: var(--bg-subtle); border-radius: 3px; overflow: hidden; margin-bottom: 0.5rem; }
+        .dim-bar-fill { height: 100%; background: var(--primary); border-radius: 3px; }
+
+        .dim-rationale { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.4rem; }
+        .dim-quote {
+            font-size: 0.8125rem;
+            font-style: italic;
+            color: var(--text-tertiary);
+            border-left: 2.5px solid var(--border);
+            padding-left: 0.75rem;
+        }
+
+        .list-block { margin-top: 1.5rem; }
+        .list-block h4 {
+            font-family: var(--font-mono);
+            font-size: 0.6875rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-tertiary);
+            margin-bottom: 0.625rem;
+        }
+        .list-block ul { list-style: none; }
+        .list-block li {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            padding-left: 1.1rem;
+            position: relative;
+            margin-bottom: 0.5rem;
+            line-height: 1.55;
+        }
+        .list-block li::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0.55em;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--text-tertiary);
+        }
+
+        /* How it works */
+        .states-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .state-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 1.25rem;
+        }
+        .state-card .state-num {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        .state-card h3 { font-family: 'DM Sans', sans-serif; font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .state-card p { font-size: 0.8125rem; color: var(--text-secondary); line-height: 1.55; }
+        .state-card.active { border-color: var(--primary-light); background: var(--primary-bg); }
+
+        pre.code-block {
+            background: #16140f;
+            color: #e5e0d5;
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            padding: 1.25rem;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            line-height: 1.7;
+            margin: 1rem 0;
+        }
+        pre.code-block .c { color: #85806f; }
+
+        .verify-note {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.25rem;
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .verify-note strong { color: var(--text-primary); }
+
+        footer {
+            border-top: 1px solid var(--border-light);
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+        }
+
+        @media (max-width: 900px) {
+            .demo-grid { grid-template-columns: 1fr; }
+            .rubric-grid { grid-template-columns: 1fr 1fr; }
+            .states-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2.1rem; }
+            .rubric-grid { grid-template-columns: 1fr; }
+            .header-links { gap: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="wrap header-inner">
+            <a href="../../index.html" class="back-link">&larr; Yonatan Leket</a>
+            <div class="header-links">
+                <a href="index.html" class="current">PRD-Critic</a>
+                <a href="evals.html">Eval Methodology</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="wrap">
+            <span class="badge">Canned demo &middot; no key, no network calls</span>
+            <h1>PRD-Critic</h1>
+            <p class="lede">
+                Most AI side projects generate more content. This one critiques it. PRD-Critic scores a
+                product requirements document against a fixed, visible rubric — the same rubric a senior
+                PM would use in review — and tells you exactly where it's not ready to build.
+            </p>
+
+            <section class="block">
+                <h2 class="block-title">The rubric</h2>
+                <p class="block-desc">Six dimensions, scored 1&ndash;5. This is the actual judgment layer &mdash; not the LLM call.</p>
+                <div class="rubric-grid">
+                    <div class="rubric-card">
+                        <div class="n">01</div>
+                        <h3>Problem Clarity</h3>
+                        <p>Is the problem specific and falsifiable, backed by evidence rather than assertion?</p>
+                    </div>
+                    <div class="rubric-card">
+                        <div class="n">02</div>
+                        <h3>Success Metrics</h3>
+                        <p>Measurable targets with a baseline, a number, and a measurement window &mdash; not just direction.</p>
+                    </div>
+                    <div class="rubric-card">
+                        <div class="n">03</div>
+                        <h3>Scope &amp; Kill Criteria</h3>
+                        <p>What's in and out of scope, and a defined condition to stop, roll back, or reconsider.</p>
+                    </div>
+                    <div class="rubric-card">
+                        <div class="n">04</div>
+                        <h3>Risks &amp; Failure Modes</h3>
+                        <p>Specific risks with likelihood, impact, and mitigation &mdash; not a list of things that could go wrong.</p>
+                    </div>
+                    <div class="rubric-card">
+                        <div class="n">05</div>
+                        <h3>Edge Cases</h3>
+                        <p>Non-happy-path scenarios enumerated for this specific feature, not generically gestured at.</p>
+                    </div>
+                    <div class="rubric-card">
+                        <div class="n">06</div>
+                        <h3>AI-Specific Readiness</h3>
+                        <p>Model choice rationale, an accuracy threshold, a cost model, and a human-in-the-loop design.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="block">
+                <h2 class="block-title">Canned demo</h2>
+                <p class="block-desc">
+                    A precomputed example &mdash; an original, fictionalized PRD on the left, its critique on the
+                    right. This is what loads with nothing clicked and nothing entered.
+                </p>
+                <div class="demo-grid">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <span>Input PRD</span>
+                            <span class="fictional-tag">fictional &mdash; not a real product</span>
+                        </div>
+                        <div class="prd-body" id="prdBody"><!-- populated by inline script below --></div>
+                    </div>
+                    <div class="panel">
+                        <div class="panel-header"><span>PRD-Critic Output</span></div>
+                        <div class="critique-body" id="critiqueBody"><!-- populated by inline script below --></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="block">
+                <h2 class="block-title">How this works</h2>
+                <p class="block-desc">Three states, in order of importance. Only the first one runs by default.</p>
+                <div class="states-grid">
+                    <div class="state-card active">
+                        <div class="state-num">01 &mdash; ACTIVE ON THIS PAGE</div>
+                        <h3>Canned demo</h3>
+                        <p>The PRD and critique above are real content, precomputed and inlined directly into this page's HTML. No API key box exists here, and this page makes no network requests at all &mdash; open your browser's dev tools and check.</p>
+                    </div>
+                    <div class="state-card">
+                        <div class="state-num">02</div>
+                        <h3>Run it live</h3>
+                        <p>Clone the repo and run the local critique script with your own Anthropic API key. The key is read from your environment and never touches a browser.</p>
+                    </div>
+                    <div class="state-card">
+                        <div class="state-num">03</div>
+                        <h3>Eval harness</h3>
+                        <p>The credibility layer: a published protocol, a golden set, and how the critic's scores compare to independent human labels. See the <a href="evals.html">methodology page</a>.</p>
+                    </div>
+                </div>
+
+                <pre class="code-block"><span class="c"># from the repo root</span>
+cd tools/prd-critic/local
+npm install
+export ANTHROPIC_API_KEY=sk-ant-...
+npm run critique -- ../sample-prd.md
+<span class="c"># or point it at your own PRD:</span>
+npm run critique -- /path/to/your-prd.md</pre>
+
+                <div class="verify-note">
+                    <span>&#9432;</span>
+                    <span><strong>Why no key box.</strong> A static page has no trusted server to hold a key server-side. A pasted key is exposed to browser extensions, any XSS, and any future compromise of this page &mdash; and a visitor has no way to verify the page isn't sending it somewhere else. The local runner keeps your key on your machine, where it belongs.</span>
+                </div>
+            </section>
+
+            <section class="block">
+                <h2 class="block-title">Limitations</h2>
+                <p class="block-desc" style="margin-bottom:0;">
+                    One sample PRD is not a benchmark. The rubric reflects one reviewer's (my) judgment about what
+                    makes a PRD buildable &mdash; reasonable people disagree on relative weighting. The structured-output
+                    schema is pinned by a fixture test (<code>tools/prd-critic/local/schema.test.mjs</code>), but that
+                    guarantees shape, not quality. Quality is what the <a href="evals.html">eval protocol</a> measures,
+                    and it's explicitly a pilot, not a claim that generalizes beyond the labeled set.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="wrap">Part of <a href="../../index.html">yonatanleket.github.io</a></div>
+    </footer>
+
+    <script>
+        const PRD_HTML = `
+            <div class="prd-meta">Ledgerly (fictional B2B expense management SaaS) &middot; Draft v1</div>
+            <h3>Auto-Categorize &mdash; AI Expense Line-Item Categorization</h3>
+            <h3>Problem</h3>
+            <p>Finance teams using Ledgerly manually re-categorize expense line items (e.g. "Uber to airport" &rarr; Travel, "AWS invoice" &rarr; Cloud Infrastructure) before they can be exported to the customer's accounting system. Categorization is the #2 support complaint after "reconciliation is slow." On average, employees spend 12 minutes a week fixing auto-imported transactions from corporate cards, because our current rules-based categorizer only gets ~60% of line items right and silently miscategorizes the rest.</p>
+            <h3>Goal</h3>
+            <p>Use an LLM to categorize expense line items automatically so finance teams spend less time on manual cleanup, and exports to accounting systems are accurate on the first pass.</p>
+            <h3>Solution</h3>
+            <p>When a new transaction arrives from a connected card feed, send the merchant name, amount, and memo field to an LLM, along with the customer's chart of accounts, and have it return a suggested category. Show the suggestion in the UI with a confidence indicator. If the employee doesn't change it within 24 hours, auto-apply it.</p>
+            <h3>Success Metrics</h3>
+            <ul>
+                <li>Categorization accuracy improves</li>
+                <li>Support tickets about categorization go down</li>
+                <li>Users are happier with the product</li>
+            </ul>
+            <h3>Risks</h3>
+            <ul>
+                <li>The LLM might get things wrong sometimes</li>
+                <li>Some customers have unusual chart-of-accounts setups</li>
+                <li>Cost of calling the LLM on every transaction</li>
+            </ul>
+            <h3>Rollout</h3>
+            <p>Ship to a few beta customers first, then roll out to everyone.</p>
+            <h3>Out of Scope</h3>
+            <ul>
+                <li>Multi-currency handling (v2)</li>
+                <li>Receipt OCR (already exists as a separate feature)</li>
+            </ul>
+        `;
+
+        const CRITIQUE = {
+            overall_summary: "This PRD frames the problem well — it is specific and falsifiable — but stops short of being buildable as an AI feature. Success metrics, risk mitigation, and every AI-specific section (model choice, eval criteria, cost model, human-in-the-loop design) are either vague or absent. The auto-apply-after-24-hours mechanic is the single highest-risk design decision in the document and receives no scrutiny at all.",
+            overall_recommendation: "needs_revision",
+            dimensions: [
+                { name: "Problem Clarity", score: 4, rationale: "The problem is quantified and falsifiable: a specific time cost, a specific accuracy rate for the current system, and a support-ticket rank. It does not state how many employees or transactions this scales across, so the aggregate cost of the problem is still implicit rather than stated.", supporting_quote: "employees spend 12 minutes a week fixing auto-imported transactions from corporate cards, because our current rules-based categorizer only gets ~60% of line items right" },
+                { name: "Success Metrics", score: 2, rationale: "All three metrics are directional with no baseline, target, or measurement window. The problem section already established a 60% baseline and a 12-minute cost — neither is carried forward into a target here, so there is no number this feature is accountable to.", supporting_quote: "Categorization accuracy improves" },
+                { name: "Scope & Kill Criteria", score: 2, rationale: "The rollout is sequenced (beta, then general availability) but no criteria are defined for what the beta needs to show to proceed, no threshold to pause or roll back, and no named owner or decision point.", supporting_quote: "Ship to a few beta customers first, then roll out to everyone." },
+                { name: "Risks & Failure Modes", score: 2, rationale: "Three risks are listed as single clauses with no likelihood, no mitigation, and critically, no connection back to the auto-apply mechanic — the PRD never addresses what happens when a wrong categorization is auto-applied and flows into a customer's accounting export unreviewed.", supporting_quote: "The LLM might get things wrong sometimes" },
+                { name: "Edge Cases", score: 1, rationale: "No edge cases are enumerated. Split transactions, refunds and negative amounts, non-English merchant names, customers with no chart of accounts configured, and employees who never open the app before the 24-hour auto-apply window are all absent.", supporting_quote: null },
+                { name: "AI-Specific Readiness", score: 1, rationale: "No model is named or justified, no accuracy threshold is set for the new system to clear before shipping, no cost model beyond acknowledging that cost exists, and the human-in-the-loop design (a 24-hour auto-apply window) is stated with no rationale, no dispute path, and no correction flow after auto-apply.", supporting_quote: "Cost of calling the LLM on every transaction" }
+            ],
+            top_risks: [
+                "Auto-apply after 24 hours means a wrong categorization can reach a customer's accounting export with no human ever reviewing it — the PRD names 'the LLM might get things wrong' as a risk but never designs for what happens when it does.",
+                "No accuracy target is defined for the new system, only that accuracy should 'improve' — without a number there is no way to decide readiness to ship, and nothing to build an eval against before launch.",
+                "No rollback or kill criteria for the beta phase — if the LLM underperforms the 60% baseline for some customer segment, there is no stated trigger to pause rollout.",
+                "Cost is acknowledged as a risk but not sized — calling an LLM on every transaction at scale could be a meaningful unit-economics problem the PRD does not quantify."
+            ],
+            missing_sections: [
+                "Model selection rationale (which model/tier, and why)",
+                "Defined accuracy threshold or eval criteria for the new system",
+                "Human-in-the-loop / dispute flow for auto-applied categorizations",
+                "Edge case handling (split transactions, refunds, foreign merchants, employees who never review suggestions)",
+                "Cost model / unit economics for per-transaction LLM calls"
+            ]
+        };
+
+        document.getElementById('prdBody').innerHTML = PRD_HTML;
+
+        const recLabel = { ready_to_build: 'Ready to build', needs_revision: 'Needs revision', not_ready: 'Not ready' };
+        let html = `<span class="rec-pill ${CRITIQUE.overall_recommendation}">${recLabel[CRITIQUE.overall_recommendation]}</span>`;
+        html += `<p class="overall-summary">${CRITIQUE.overall_summary}</p>`;
+        for (const d of CRITIQUE.dimensions) {
+            html += `<div class="dim">
+                <div class="dim-head"><span class="dim-name">${d.name}</span><span class="dim-score">${d.score}/5</span></div>
+                <div class="dim-bar"><div class="dim-bar-fill" style="width:${d.score / 5 * 100}%"></div></div>
+                <p class="dim-rationale">${d.rationale}</p>
+                ${d.supporting_quote ? `<p class="dim-quote">&ldquo;${d.supporting_quote}&rdquo;</p>` : ''}
+            </div>`;
+        }
+        html += `<div class="list-block"><h4>Top Risks</h4><ul>${CRITIQUE.top_risks.map(r => `<li>${r}</li>`).join('')}</ul></div>`;
+        html += `<div class="list-block"><h4>Missing Sections</h4><ul>${CRITIQUE.missing_sections.map(m => `<li>${m}</li>`).join('')}</ul></div>`;
+        document.getElementById('critiqueBody').innerHTML = html;
+    </script>
+</body>
+</html>

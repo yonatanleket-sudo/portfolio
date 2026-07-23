@@ -1,0 +1,159 @@
+{
+  "_note": "All PRDs below are original and fictionalized — invented companies, invented features, invented numbers. None describe or derive from any real employer's product, data, or internal documents. This set is distinct from sample-prd.md (used only for the public canned demo, whose critique is already public and therefore unusable for blind labeling). Labels are null until Yonatan completes blind labeling per protocol.md — nothing here should be read as a scored result.",
+  "schema_version": 1,
+  "label_scale": "1 (missing/unusable) to 5 (complete) per dimension — see protocol.md label guide",
+  "dimensions": [
+    "Problem Clarity",
+    "Success Metrics",
+    "Scope & Kill Criteria",
+    "Risks & Failure Modes",
+    "Edge Cases",
+    "AI-Specific Readiness"
+  ],
+  "prds": [
+    {
+      "id": "gs-01",
+      "company": "Northlane (fictional B2B analytics SaaS)",
+      "title": "Churn Risk Score for Account Managers",
+      "archetype": "data-ml",
+      "text": "Problem: Account managers currently rely on gut feel to decide which of their 40-60 accounts need attention this week. In a review of 25 accounts that churned last quarter, 18 had usage drops visible 3+ weeks before cancellation that no one acted on. Goal: surface a 0-100 risk score per account, refreshed daily, based on usage trend, support ticket volume, and days since last login. Success Metrics: of accounts flagged in the top decile of risk, we want at least 30% to receive a proactive outreach within 5 days (baseline today: under 5%, per CRM activity logs), measured over the first full quarter post-launch. Scope: v1 covers our 3 largest customer segments only; kill criteria — if precision at the top-decile threshold is below 40% after 4 weeks of live scoring (validated against actual churn outcomes), we pull the score from the UI and revisit the model rather than let it erode trust. Risks: false positives could cause AMs to waste time on healthy accounts and start ignoring the score (alert fatigue) — mitigated by capping visible flags to 5 per AM per week. AI-Specific: model is a gradient-boosted classifier (not an LLM), retrained monthly; accuracy threshold is the 40% precision bar above; AMs can dismiss a flag with a one-click reason, which feeds back into the next retraining set. Edge Cases: new accounts under 60 days old are excluded (insufficient history); accounts already in an active save-play are suppressed from new flags to avoid duplicate outreach.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-02",
+      "company": "Alderwood (fictional clinic scheduling SaaS)",
+      "title": "Auto-Reschedule for No-Shows",
+      "archetype": "workflow-automation",
+      "text": "Problem: No-shows are annoying for clinics. Goal: automatically rebook a no-show patient into the next available slot without staff having to call them. Solution: when the system detects a no-show (patient didn't check in within 15 minutes of appointment time), send an automated text offering the next 3 open slots; if the patient doesn't respond in an hour, pick one for them. Success Metrics: reduce the no-show rate. Risks: patients might not like being auto-booked. Scope: applies to all appointment types at launch. Out of scope: waitlist integration (later).",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-03",
+      "company": "Fenwick Labs (fictional analytics dashboard product)",
+      "title": "Dark Mode for the Analytics Dashboard",
+      "archetype": "pure-ui",
+      "text": "Problem: 34% of session time on our dashboard happens after 8pm local time (per our own product analytics, last 90 days), and we've received 210 support/feedback requests for a dark theme over the past year — our single most-requested visual change. Goal: ship a dark theme covering all dashboard surfaces (charts, tables, nav) that meets WCAG AA contrast. Success Metrics: dark mode adoption among users who open settings at least once reaches 25% within 60 days of launch (we'll instrument a settings-opened event to measure this honestly, since users who never open settings can't be counted as 'declining' dark mode). Scope: charts, tables, modals, and nav in v1; marketing/onboarding pages explicitly out of scope (different codebase, tracked separately). Kill criteria: none needed — this is a low-risk, reversible, purely additive UI toggle, and the PRD says so explicitly rather than inventing one. Risks: chart color palettes were designed for light backgrounds; several data-viz colors (light yellow, pale green) fail contrast on dark — flagged for design to produce a parallel dark palette, not just an inverted one. Edge Cases: user's OS-level dark mode preference vs. in-app toggle precedence is specified (in-app toggle always wins if set; otherwise follows OS `prefers-color-scheme`); screenshots/exports always render in light mode regardless of UI theme, stated explicitly so support isn't surprised by tickets about it.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-04",
+      "company": "Larkspur (fictional freight logistics SaaS)",
+      "title": "Predictive ETA Widget",
+      "archetype": "data-ml",
+      "text": "Problem: customers ask dispatchers for ETAs a lot. Goal: show a predicted ETA on the tracking page using a model. Solution: train a model on historical trip data (distance, time of day, weather) to predict arrival time and display it with a confidence range. Success Metrics: ETAs should be more accurate than what dispatchers currently give verbally. Risks: model could be wrong, especially for unusual routes. AI-Specific: we'll use some kind of regression model on historical data.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-05",
+      "company": "Millbrook (fictional CRM for SMBs)",
+      "title": "Auto-Assign Leads by Territory",
+      "archetype": "workflow-automation",
+      "text": "Problem: new inbound leads sit unassigned for an average of 4 hours before a rep claims them from the shared queue, and our own funnel data shows leads contacted within 15 minutes convert at roughly double the rate of leads contacted after 2 hours. Goal: auto-assign each new lead to a rep based on territory (zip code mapping) the moment it arrives. Success Metrics: median time-to-first-contact drops from 4 hours to under 30 minutes within 30 days of launch, measured from existing CRM timestamps we already log. Scope: US territories only at launch (we don't have clean territory mappings for international leads yet — explicitly out of scope, not silently ignored). Risks: zip-to-territory mapping has known gaps for about 6% of zip codes (PO boxes, new zips); those leads fall back to the shared queue rather than auto-assigning to a wrong rep. Kill criteria: if the fallback rate exceeds 15% in production (signaling the mapping is worse than expected), auto-assign pauses and reverts to the manual queue while the mapping is fixed. Edge Cases not yet addressed: what happens when a rep is on PTO (leads would currently pile up under their name with no reassignment) — flagged as a known gap for v1.1, not solved here.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-06",
+      "company": "Corvid Systems (fictional dev-tools SaaS)",
+      "title": "Redesigned Onboarding Checklist",
+      "archetype": "pure-ui",
+      "text": "Problem: new users seem confused when they sign up. Goal: make a nicer onboarding checklist. Solution: redesign the checklist UI to look more modern. Success Metrics: better activation. Risks: none really, it's just a UI change. Scope: the whole onboarding flow, TBD exactly what that includes.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-07",
+      "company": "Thistle & Co (fictional online marketplace)",
+      "title": "Fraud Score for Marketplace Listings",
+      "archetype": "data-ml",
+      "text": "Problem: manual review of new listings for fraud (stolen photos, fake inventory, bait-and-switch pricing) currently covers only 8% of new listings daily because we have 2 trust & safety reviewers and 3,000+ new listings a day; the uncovered 92% is where nearly all confirmed fraud cases originate post-hoc. Goal: score every new listing 0-100 for fraud likelihood at creation time using an LLM classifier reviewing listing text, images, and seller history, routing high-score listings to human review before they go live. Success Metrics: at least 60% of listings that would eventually be manually removed for fraud are caught pre-publish within 30 days of launch (measured by comparing pre-publish flags against the existing post-hoc removal log, our best available ground truth). Eval criteria: before launch, the classifier must hit this 60% recall bar against a held-out sample of 200 known-fraudulent historical listings, with false-positive rate on legitimate listings under 3% (legitimate sellers wrongly held for review is the direct cost of this feature). Cost model: per-listing classification cost is estimated and capped against current T&S headcount cost as the budget ceiling. Human-in-the-loop: nothing auto-rejects; the model only routes to priority human review, with a full audit log of every score. Risks: adversarial sellers adapting listing text once they learn what triggers review (mitigated by not disclosing scoring criteria publicly and rotating which signals weigh most heavily). Edge Cases: sellers with long clean histories get a lighter-touch review tier; new sellers with no history default to standard review regardless of score.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-08",
+      "company": "Hearthside (fictional property management SaaS)",
+      "title": "Automated Late-Rent Reminders",
+      "archetype": "workflow-automation",
+      "text": "Problem: property managers currently send late-rent reminders manually, and our support logs show this is often forgotten until day 10+ past due, by which point 40% of late payers have already been late 3+ times (from 12 months of payment-history data across our customer base). Goal: automatically email + text a reminder on day 1, day 5, and day 10 past due, with tone escalating slightly each time, and stop automatically once payment is recorded. Success Metrics: reduce the share of payments that go 10+ days late from the current 22% baseline to under 15% within one full billing cycle after launch. Scope: residential leases only at launch; commercial leases (which have different grace-period norms per contract) are explicitly excluded and flagged for a v2 review with the commercial product owner. Kill criteria: if tenant complaint volume about reminder tone rises more than 20% over baseline in the first cycle, the escalation language is rolled back to a single flat tone while copy is revisited. Risks: reminders could be sent after a payment was already made but not yet reconciled in the system (timing race) — mitigated by a 2-hour delay after the scheduled send time to re-check payment status immediately before sending. Edge Cases: tenants on an approved payment plan are excluded from the standard reminder cadence entirely and use a separate, already-existing plan-specific flow.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-09",
+      "company": "Greywalk (fictional analytics SaaS)",
+      "title": "Customizable Dashboard Widgets",
+      "archetype": "pure-ui",
+      "text": "Problem: customers keep asking for different chart layouts. Some want bar charts, some want a big single-number tile. Goal: let users drag, resize, and choose chart type per widget on their dashboard. Success Metrics: usage of the customization feature; positive feedback. Scope: covers the main dashboard; doesn't cover shared/team dashboards yet — that's called out as a known gap, though no date is attached to closing it. Risks: users could build a cluttered, unreadable dashboard and blame the product; no real mitigation proposed beyond 'we'll see how it goes.' Edge Cases: what happens to a saved custom layout when the underlying data source for a widget is deleted isn't addressed.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-10",
+      "company": "Amberline (fictional B2B payments platform)",
+      "title": "Invoice Anomaly Detector",
+      "archetype": "data-ml",
+      "text": "Problem: duplicate and inflated invoices slip through AP review; a sample audit found 1.2% of paid invoices last year had some anomaly (duplicate, amount mismatch vs. PO, or a vendor billing above their contracted rate). Goal: flag anomalous invoices before payment using a rules + ML hybrid. Success Metrics: catch a meaningfully higher share of anomalies pre-payment than today's process — exact target still being finalized with the AP team, noted here as an open item rather than invented. Risks: flagging too aggressively could delay legitimate vendor payments and damage vendor relationships; flagging too little defeats the purpose. AI-Specific: model type and accuracy bar not yet decided — pending a data science scoping spike; this PRD is intentionally being sent for review before that spike concludes, to get directional feedback on the problem framing first. Scope: initially covers invoices over $5,000 only, where the dollar impact of an anomaly is highest. Edge Cases: recurring/subscription invoices with known fixed amounts should have a much higher bar for flagging than one-off invoices, since amount consistency is expected there and shouldn't itself look anomalous.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-11",
+      "company": "Sable Systems (fictional IT helpdesk SaaS)",
+      "title": "Auto-Archive Stale Tickets",
+      "archetype": "workflow-automation",
+      "text": "Problem: old tickets pile up. Goal: automatically archive tickets that haven't been updated in 30 days. Solution: a scheduled job moves stale tickets to an archived state. Success Metrics: fewer open tickets in the dashboard. Risks: might archive something that's still relevant. Scope: all ticket types.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-12",
+      "company": "Foxglove (fictional healthcare scheduling SaaS)",
+      "title": "Accessible Appointment Booking Flow",
+      "archetype": "pure-ui",
+      "text": "Problem: a screen-reader audit (commissioned last quarter) found 14 blocking issues in our current booking flow, including unlabeled date-picker controls and a confirmation step that doesn't announce success to assistive tech — meaning some patients cannot complete a booking independently today. Goal: rebuild the booking flow to meet WCAG 2.2 AA, verified by both automated scanning and a manual screen-reader pass (not automated tooling alone, which the audit noted misses a meaningful share of real issues). Success Metrics: zero blocking issues on re-audit before launch; task-completion rate for screen-reader users in usability testing reaches parity (within 10%) with sighted-mouse users, tested with 5 participants from each group pre-launch. Scope: the booking flow only (date/time selection through confirmation); the surrounding marketing pages are a separate, already-tracked workstream. Kill criteria: if the re-audit finds new blocking issues, launch is delayed until they're resolved — this is treated as non-negotiable given the original audit's legal and ethical weight, not a nice-to-have. Risks: third-party calendar-sync widget embedded in the flow is not WCAG-compliant by default; team is evaluating whether to replace it or wrap it, decision due before implementation starts. Edge Cases: users who navigate by keyboard only (not screen-reader) are tested as a separate group, since keyboard and screen-reader accessibility issues don't always overlap.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-13",
+      "company": "Windmere (fictional freight/trucking SaaS)",
+      "title": "Route Optimization Suggestions",
+      "archetype": "data-ml",
+      "text": "Problem: dispatchers plan routes manually. Goal: suggest optimized routes automatically to save fuel and time. Solution: use an optimization algorithm considering traffic and delivery windows. Success Metrics: routes should be more efficient. Risks: suggestions might not account for driver preferences or vehicle-specific constraints. AI-Specific: exact approach (heuristic vs. learned model) not specified; no accuracy or efficiency threshold defined; no mention of how dispatchers can override a bad suggestion.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-14",
+      "company": "Copperfield Ops (fictional workforce scheduling SaaS)",
+      "title": "Shift-Swap Approval Automation",
+      "archetype": "workflow-automation",
+      "text": "Problem: shift swaps between employees currently require a manager to manually check that the swap doesn't create an overtime or understaffing violation, which takes an average of 1 business day per request per our support ticket data, and requests submitted on a Friday often aren't resolved until Monday. Goal: auto-approve swaps that pass a rules check (no overtime trigger, no understaffing below minimum coverage, both employees qualified for the role) and only route to a manager when a rule fails. Success Metrics: cut median approval time from 1 business day to under 1 hour for the auto-approvable share of requests (estimated at roughly 70% of swaps based on a sample of last quarter's manually-approved requests) within 6 weeks of launch. Scope: hourly, non-exempt roles only at launch, since overtime rules are clearest there; salaried-role swaps remain fully manual and out of scope. Kill criteria: if post-launch audit finds any auto-approved swap that actually violated labor rules (should be zero by design, but this is the check), auto-approval pauses immediately pending a rule-logic review. Risks: rule logic must stay in sync with labor law changes per state; owner and review cadence for that sync is assigned to the compliance team, named explicitly rather than left ambiguous. Edge Cases: swaps spanning a pay-period boundary get routed to manual review by default, since overtime calculation across periods is the case most likely to have a rule-logic gap.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-15",
+      "company": "Kestrel Analytics (fictional BI/reporting SaaS)",
+      "title": "New Chart Types for Reports",
+      "archetype": "pure-ui",
+      "text": "Problem: customers want more chart types. Goal: add scatter plots, heatmaps, and funnel charts to the report builder. Success Metrics: usage of new chart types. Scope: report builder only. Risks: not really discussed.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-16",
+      "company": "Driftwood Data (fictional data-quality tooling SaaS)",
+      "title": "Duplicate Customer Record Detector",
+      "archetype": "data-ml",
+      "text": "Problem: customers' CRM data accumulates duplicate contact records (same person entered twice with slightly different spelling, email, or phone format) — an audit of 5 customer accounts found duplicate rates between 4% and 11% of total contacts, which breaks email deliverability metrics and skews their reporting. Goal: an LLM-based matching service that scores pairs of contact records for likely-duplicate status and lets an admin review and merge in bulk. Success Metrics: for a labeled test set of 500 known duplicate/non-duplicate pairs (built by the data-quality team from real anonymized patterns), the matcher must hit at least 90% precision and 80% recall before it ships to any customer — precision weighted higher because a wrongly-merged pair (two different real people combined) is harder to undo cleanly than a missed duplicate. Cost model: per-comparison LLM cost estimated against expected pairs-per-account volume, with a fallback to a cheaper string-similarity pre-filter so the LLM only scores pairs that clear a basic similarity bar first (reduces calls by an estimated 95%). Human-in-the-loop: nothing auto-merges; admin reviews every suggested pair before merging, and merges are reversible for 30 days. Risks: a systematic bias toward flagging common names as duplicates more often (a known issue in fuzzy-matching literature) is called out explicitly as something to test for in the 500-pair set before launch, not assumed away. Edge Cases: business contacts sharing a company phone/address but genuinely different people are the hardest case and are specifically included in the test set.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-17",
+      "company": "Marrow HR (fictional HR/payroll SaaS)",
+      "title": "Automated PTO Balance Reconciliation",
+      "archetype": "workflow-automation",
+      "text": "Problem: PTO balances drift out of sync between the scheduling module and the payroll module when an employee's accrual rate changes mid-year (promotion, tenure milestone); a manual quarterly audit last cycle found discrepancies on 6% of employee accounts, almost always underpayment of owed PTO rather than overpayment. Goal: run an automated nightly reconciliation job that flags any account where the two modules' balances diverge by more than 0.1 hours, and auto-corrects the discrepancy in the scheduling module (source of truth) after a 48-hour hold for HR review. Success Metrics: reduce discrepancy rate found at the next quarterly audit from 6% to under 1%. Scope: covers accrual-based PTO policies only; unlimited-PTO policies have no balance to reconcile and are explicitly out of scope. Kill criteria: if the 48-hour auto-correct produces a wrong correction (verified against a manual sample check for the first month post-launch), auto-correct is disabled and the job reverts to flag-only until the logic is fixed. Risks: auto-correcting the wrong direction (reducing an employee's balance incorrectly) is the single highest-impact failure mode, which is why the 48-hour HR hold exists before any correction is applied, not after. Edge Cases: employees who transferred between entities with different accrual policies mid-quarter are excluded from auto-correction and always routed to manual HR review, since the correct balance calculation genuinely depends on policy details the job doesn't model.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    },
+    {
+      "id": "gs-18",
+      "company": "Bramble Support (fictional customer support helpdesk SaaS)",
+      "title": "Inline Ticket Tagging Suggestions",
+      "archetype": "pure-ui",
+      "text": "Problem: agents forget to tag tickets consistently, which breaks downstream reporting. Goal: suggest tags inline as the agent types, based on ticket content, using an LLM. Success Metrics: tag consistency should improve. Risks: suggestions could be wrong or biased toward common tags, under-suggesting rarer-but-correct ones. AI-Specific: model choice and prompt not specified; no accuracy bar defined for what counts as a 'good' suggestion; no fallback described for when the agent ignores every suggestion (does the system learn from that, or not); cost of calling a model on every keystroke-pause is not addressed. Scope: ticket tagging only, not other ticket fields.",
+      "labels": { "Problem Clarity": null, "Success Metrics": null, "Scope & Kill Criteria": null, "Risks & Failure Modes": null, "Edge Cases": null, "AI-Specific Readiness": null }
+    }
+  ]
+}

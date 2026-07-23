@@ -1,0 +1,55 @@
+{
+  "overall_summary": "This PRD frames the problem well — it is specific and falsifiable — but stops short of being buildable as an AI feature. Success metrics, risk mitigation, and every AI-specific section (model choice, eval criteria, cost model, human-in-the-loop design) are either vague or absent. The auto-apply-after-24-hours mechanic is the single highest-risk design decision in the document and receives no scrutiny at all.",
+  "overall_recommendation": "needs_revision",
+  "dimensions": [
+    {
+      "name": "Problem Clarity",
+      "score": 4,
+      "rationale": "The problem is quantified and falsifiable: a specific time cost, a specific accuracy rate for the current system, and a support-ticket rank. It does not state how many employees or transactions this scales across, so the aggregate cost of the problem is still implicit rather than stated.",
+      "supporting_quote": "employees spend 12 minutes a week fixing auto-imported transactions from corporate cards, because our current rules-based categorizer only gets ~60% of line items right"
+    },
+    {
+      "name": "Success Metrics",
+      "score": 2,
+      "rationale": "All three metrics are directional with no baseline, target, or measurement window. The problem section already established a 60% baseline and a 12-minute cost — neither is carried forward into a target here, so there is no number this feature is accountable to.",
+      "supporting_quote": "Categorization accuracy improves"
+    },
+    {
+      "name": "Scope & Kill Criteria",
+      "score": 2,
+      "rationale": "The rollout is sequenced (beta, then general availability) but no criteria are defined for what the beta needs to show to proceed, no threshold to pause or roll back, and no named owner or decision point.",
+      "supporting_quote": "Ship to a few beta customers first, then roll out to everyone."
+    },
+    {
+      "name": "Risks & Failure Modes",
+      "score": 2,
+      "rationale": "Three risks are listed as single clauses with no likelihood, no mitigation, and critically, no connection back to the auto-apply mechanic — the PRD never addresses what happens when a wrong categorization is auto-applied and flows into a customer's accounting export unreviewed.",
+      "supporting_quote": "The LLM might get things wrong sometimes"
+    },
+    {
+      "name": "Edge Cases",
+      "score": 1,
+      "rationale": "No edge cases are enumerated. Split transactions, refunds and negative amounts, non-English merchant names, customers with no chart of accounts configured, and employees who never open the app before the 24-hour auto-apply window are all absent.",
+      "supporting_quote": null
+    },
+    {
+      "name": "AI-Specific Readiness",
+      "score": 1,
+      "rationale": "No model is named or justified, no accuracy threshold is set for the new system to clear before shipping, no cost model beyond acknowledging that cost exists, and the human-in-the-loop design (a 24-hour auto-apply window) is stated with no rationale, no dispute path, and no correction flow after auto-apply.",
+      "supporting_quote": "Cost of calling the LLM on every transaction"
+    }
+  ],
+  "top_risks": [
+    "Auto-apply after 24 hours means a wrong categorization can reach a customer's accounting export with no human ever reviewing it — the PRD names 'the LLM might get things wrong' as a risk but never designs for what happens when it does.",
+    "No accuracy target is defined for the new system, only that accuracy should 'improve' — without a number there is no way to decide readiness to ship, and nothing to build an eval against before launch.",
+    "No rollback or kill criteria for the beta phase — if the LLM underperforms the 60% baseline for some customer segment, there is no stated trigger to pause rollout.",
+    "Cost is acknowledged as a risk but not sized — calling an LLM on every transaction at scale could be a meaningful unit-economics problem the PRD does not quantify."
+  ],
+  "missing_sections": [
+    "Model selection rationale (which model/tier, and why)",
+    "Defined accuracy threshold or eval criteria for the new system",
+    "Human-in-the-loop / dispute flow for auto-applied categorizations",
+    "Edge case handling (split transactions, refunds, foreign merchants, employees who never review suggestions)",
+    "Cost model / unit economics for per-transaction LLM calls"
+  ]
+}
